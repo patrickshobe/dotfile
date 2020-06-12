@@ -1,0 +1,43 @@
+[user]
+	name = Patrick Shobe
+	email = patrick@patrickshobe.com
+[alias]
+	co = checkout
+	br = branch
+	ci = commit
+	st = status
+	magic = push origin -u head
+[core]
+	excludesfile = /Users/pat/.gitignore_global
+	pager = diff-so-fancy | less --tabs=4 -RFX
+[filter "lfs"]
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+[commit]
+  template = ~/.gitmessage
+[color]
+	ui = true
+[color "diff-highlight"]
+	oldNormal = red bold
+	oldHighlight = red bold 52
+	newNormal = green bold
+	newHighlight = green bold 22
+[color "diff"]
+	meta = yellow
+	frag = magenta bold
+	commit = yellow bold
+	old = red bold
+	new = green bold
+	whitespace = red reverse
+[github]
+	oauth-token = b4434b0c8dcb7f10c7b3eeb07b9a70d7c5d81ec4
+	user = patrickshobe
+[difftool]
+    prompt = true
+[diff]
+    tool = nvimdiff
+[difftool "nvimdiff"]
+    cmd = "nvim -d -u ~/.vimrc \"$LOCAL\" \"$REMOTE\""
+
