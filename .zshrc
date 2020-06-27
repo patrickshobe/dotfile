@@ -1,4 +1,5 @@
 source "${HOME}/.zgen/zgen.zsh"
+export FZF_BASE=/path/to/fzf/install/dir
 # if the init script doesn't exist
 if ! zgen saved; then
 
