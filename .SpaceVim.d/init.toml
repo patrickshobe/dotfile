@@ -19,17 +19,30 @@
     # Disable statusline separator, if you want to use other value, please
     # install nerd fonts
     statusline_separator = "arrow"
-    statusline_inactive_separator = "arrow"
+    statusline_inactive_separator = "bar"
+	enable_statusline_mode = true
     buffer_index_type = 4
     enable_tabline_filetype_icon = true
     enable_statusline_mode = false
-	vimcompatible = true
+	# vimcompatible =  true
     default_indent = 4
     expand_tab = false
     filemanager = "defx"
-    relativenumber = true
     autocomplete_parens = false
+    relativenumber = true
 	filetree_direction = "left"
+
+	statusline_left_sections = [
+       'filename',
+    ]
+    # right sections of statusline
+    statusline_right_sections = [
+       'cursorpos',
+    ]
+
+[[layers]]
+	name = "core#statusline"
+	enable = false
 
 # Enable autocomplete layer
 [[layers]]
