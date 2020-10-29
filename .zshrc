@@ -5,6 +5,7 @@ if ! zgen saved; then
 
   # specify plugins here
   zgen oh-my-zsh
+  zgen oh-my-zsh plugins/dotenv
   zgen oh-my-zsh plugins/fzf
   zgen oh-my-zsh plugins/git
   zgen oh-my-zsh plugins/zsh-interactive-cd
@@ -23,8 +24,12 @@ alias :q='exit'
 alias TERM=xterm-256color tmux
 alias vi=nvim
 alias tm=tmuxinator
+alias dc=docker-compose
 #alias ctags="`brew --prefix`/bin/ctags"
 alias mux='tmux attach -t'
+alias reup='clear && tmux clear-history && docker-compose restart $SERVICE && docker-compose logs --tail=0 -f $SERVICE'
+
+
 
 # Spaceship section
 SPACESHIP_USER_SHOW=false
@@ -42,6 +47,7 @@ SPACESHIP_CHAR_SUFFIX='  '
 SPACESHIP_CHAR_PREFIX=' '
 SPACESHIP_GIT_BRANCH_COLOR=208
 SPACESHIP_PACKAGE_SHOW=false
+SPACESHIP_PYTHON_SHOW=false
 SPACESHIP_NODE_SHOW=false
 SPACESHIP_DOCKER_SHOW=false
 SPACESHIP_VI_MODE_COLOR=15
@@ -64,4 +70,11 @@ if [ -f '/Users/pat/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/pat/g
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+
+###-tns-completion-start-###
+if [ -f /Users/pat/.tnsrc ]; then 
+    source /Users/pat/.tnsrc 
+fi
+###-tns-completion-end-###
+source /Users/pat/.invoke_completions.sh
 

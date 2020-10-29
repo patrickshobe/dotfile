@@ -13,8 +13,8 @@ alt - h : yabai -m window --focus west
 alt - j : yabai -m window --focus south
 alt - k : yabai -m window --focus north
 alt - l : yabai -m window --focus east
-cmd - j : yabai -m window --focus next
-cmd - k : yabai -m window --focus prev
+cmd - h : yabai -m window --focus next
+cmd - l : yabai -m window --focus prev
 
 # Moving windows
 shift + alt - h : yabai -m window --warp west
