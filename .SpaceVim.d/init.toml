@@ -20,13 +20,13 @@
     # install nerd fonts
     statusline_separator = "arrow"
     statusline_inactive_separator = "bar"
-	enable_statusline_mode = true
-    buffer_index_type = 4
-    enable_tabline_filetype_icon = true
+	# enable_statusline_mode = true
+		# buffer_index_type = 4
+		enable_tabline_filetype_icon = true
     enable_statusline_mode = false
 	# vimcompatible =  true
-    default_indent = 4
-    expand_tab = false
+    # default_indent = 4
+    # expand_tab = false
     filemanager = "defx"
     autocomplete_parens = false
     relativenumber = true
@@ -52,8 +52,8 @@ auto_completion_tab_key_behavior = "smart"
 
 [[layers]]
 name = 'shell'
-default_position = 'bottom'
-default_height = '40'
+default_position = 'right'
+default_height = '10'
 
 [[layers]]
 name = "colorscheme"
@@ -76,11 +76,7 @@ git-plugin = 'fugitive'
   name = "lang#dockerfile"
 
 [[layers]]
-name = "lang#python"
-python_file_head = []
-
-[[layers]]
-name = "lang#vue"
+name = "lang#ruby"
 
 [[layers]]
 name = "lang#javascript"

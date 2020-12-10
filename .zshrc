@@ -28,6 +28,7 @@ alias dc=docker-compose
 #alias ctags="`brew --prefix`/bin/ctags"
 alias mux='tmux attach -t'
 alias reup='clear && tmux clear-history && docker-compose restart $SERVICE && docker-compose logs --tail=0 -f $SERVICE'
+alias routes="rails routes | fzf -e"
 
 
 
@@ -75,6 +76,5 @@ test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell
 if [ -f /Users/pat/.tnsrc ]; then 
     source /Users/pat/.tnsrc 
 fi
-###-tns-completion-end-###
-source /Users/pat/.invoke_completions.sh
 
+eval "$(rbenv init -)"
