@@ -21,14 +21,17 @@ export EDITOR=nvim
 
 alias :q='exit'
 alias TERM=xterm-256color tmux
+alias cc="clear && tmux clear-history"
 alias vi=nvim
 alias dc=docker-compose
 #alias ctags="`brew --prefix`/bin/ctags"
 alias mux='tmux attach -t'
-alias routes="rails routes | fzf -e"
+alias routes="rake routes | fzf -e"
 alias a="arch -x86_64"
 alias ibrew="arch -x86_64 brew"
 alias ctags='/usr/local/bin/ctags'
+alias pec='rspec --drb'
+alias splork='RAILS_ENV=test bundle exec spork'
 
 
 
@@ -43,5 +46,11 @@ if [ -f /Users/pat/.tnsrc ]; then
     source /Users/pat/.tnsrc 
 fi
 
-eval "$(rbenv init -)"
 eval "$(starship init zsh)"
+
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="$PATH:$HOME/.rvm/bin"
+export PATH="$PATH:/usr/local/opt/mysql@5.6/bin"
+export AWS_VAULT_PROMPT=osascript
+export AWS_VAULT_KEYCHAIN_NAME=login
+

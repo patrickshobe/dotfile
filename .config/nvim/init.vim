@@ -4,8 +4,10 @@ set number relativenumber " dual relative and actual numbering
 set lazyredraw "dont re-render while running macros
 set backspace=indent,eol,start " sane backspace config
 set scrolloff=4 " keep 4 lines below the cursor
+set diffopt+=vertical "vertical git diffs
 
 syntax on
+
 
 filetype plugin indent on
 filetype on
@@ -69,6 +71,9 @@ call plug#begin('~/.vim/plugged')
 	" autocomplete
 	Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 
+  Plug 'mxw/vim-jsx'
+  Plug 'mhinz/vim-startify'
+
 call plug#end()
 colorscheme onedark
 
@@ -116,14 +121,18 @@ inoremap <silent><expr> <TAB>
 
 """" ALE
 """"
+let g:ale_sign_error = 'x'
+let g:ale_sign_warning = '-'
+let g:ale_set_highlights = 0
 let g:ale_linters = {
-      \   'ruby': ['standardrb'],
+      \   'ruby': ['rubocop'],
       \   'javascript': ['eslint'],
       \}
 let g:ale_fixers = {
-      \    'ruby': ['standardrb'],
+      \    'ruby': ['rubocop'],
+      \   'javascript': ['eslint'],
       \}
-let g:ale_fix_on_save = 1
+let g:ale_fix_on_save = 0
 
 
 """" COMMENTS
@@ -158,10 +167,14 @@ inoremap <C-t>     <Esc>:tabnew<CR>
 
 nnoremap <leader>f :Files<CR>
 nnoremap <leader>b :Buffers<CR>
+nnoremap <leader>c :Commands<CR>
+nnoremap <leader>h :Startify<CR>
 
-
+nnoremap <leader><Tab> :b#<cr>
+nnoremap <leader>bb :b<Space>
 nnoremap <leader>k :bnext<CR>
 nnoremap <leader>j :bprevious<CR>
+nnoremap <leader>s :call fzf#vim#ag(expand('<cword>'))<CR>
 
 hi Normal guibg=NONE ctermbg=NONE
 if !has('gui_running')
@@ -171,6 +184,8 @@ endif
 """" AIRLINE
 """"
 let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#fnamemod = ':t'
+let g:airline#extensions#tabline#buffer_nr_show = 1
 
 
 let g:airline_section_x      =''
@@ -184,3 +199,37 @@ autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTr
     \ quit | endif
 
 
+
+"""" Startify
+""""
+
+let g:startify_change_to_dir = 0
+function! s:gitModified()
+    let files = systemlist('git ls-files -m 2>/dev/null')
+    return map(files, "{'line': v:val, 'path': v:val}")
+endfunction
+
+" same as above, but show untracked files, honouring .gitignore
+function! s:gitUntracked()
+    let files = systemlist('git ls-files -o --exclude-standard 2>/dev/null')
+    return map(files, "{'line': v:val, 'path': v:val}")
+endfunction
+
+let g:startify_lists = [
+        \ { 'type': 'dir',       'header': ['   MRU '. getcwd()] },
+        \ { 'type': function('s:gitModified'),  'header': ['   git modified']},
+        \ { 'type': function('s:gitUntracked'), 'header': ['   git untracked']},
+        \ { 'type': 'files',     'header': ['   MRU']            },
+        \ ]
+
+    let g:ascii = [
+          \ '        __',
+          \ '.--.--.|__|.--------.',
+          \ '|  |  ||  ||        |',
+          \ ' \___/ |__||__|__|__|',
+          \ ''
+          \]
+
+  let g:startify_custom_header =
+        \ 'startify#pad(g:ascii)'
+  let g:startify_padding_left = 15
