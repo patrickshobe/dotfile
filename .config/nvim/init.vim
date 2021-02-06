@@ -73,13 +73,14 @@ call plug#begin('~/.vim/plugged')
 
   Plug 'mxw/vim-jsx'
   Plug 'mhinz/vim-startify'
+  Plug 'liuchengxu/vim-which-key'
 
 call plug#end()
 colorscheme onedark
 
 """" rspec
 """"
-let g:rspec_command = 'call Send_to_Tmux("rspec {spec}\n")'
+let g:rspec_command = 'call Send_to_Tmux("rspec --drb {spec}\n")'
 map <Leader>t :call RunCurrentSpecFile()<CR>
 map <Leader>s :call RunNearestSpec()<CR>
 map <Leader>l :call RunLastSpec()<CR>
@@ -144,37 +145,6 @@ autocmd FileType ruby setlocal commentstring=#\ %s
 autocmd VimResized * :wincmd =
 
 
-"""" KEYMAP
-""""
-let mapleader = "\<Space>"
-
-" Zoom and resize splits like tmux
-nnoremap <leader>- :wincmd _<cr>:wincmd \|<cr>
-nnoremap <leader>= :wincmd =<cr>
-
-" Nerd Tree 
-nnoremap <leader>n :NERDTreeFocus<CR>
-nnoremap <C-n> :NERDTree<CR>
-nnoremap <C-t> :NERDTreeToggle<CR>
-nnoremap <C-f> :NERDTreeFind<CR>
-
-nnoremap <C-S-tab> :tabprevious<CR>
-nnoremap <C-tab>   :tabnext<CR>
-nnoremap <C-t>     :tabnew<CR>
-inoremap <C-S-tab> <Esc>:tabprevious<CR>i
-inoremap <C-tab>   <Esc>:tabnext<CR>i
-inoremap <C-t>     <Esc>:tabnew<CR>
-
-nnoremap <leader>f :Files<CR>
-nnoremap <leader>b :Buffers<CR>
-nnoremap <leader>c :Commands<CR>
-nnoremap <leader>h :Startify<CR>
-
-nnoremap <leader><Tab> :b#<cr>
-nnoremap <leader>bb :b<Space>
-nnoremap <leader>k :bnext<CR>
-nnoremap <leader>j :bprevious<CR>
-nnoremap <leader>s :call fzf#vim#ag(expand('<cword>'))<CR>
 
 hi Normal guibg=NONE ctermbg=NONE
 if !has('gui_running')
@@ -223,13 +193,60 @@ let g:startify_lists = [
         \ ]
 
     let g:ascii = [
-          \ '        __',
-          \ '.--.--.|__|.--------.',
-          \ '|  |  ||  ||        |',
-          \ ' \___/ |__||__|__|__|',
-          \ ''
-          \]
+  \ '           ',
+  \ '           ',
+  \ '           ███╗   ██╗███████╗ ██████╗ ██╗   ██╗██╗███╗   ███╗',
+  \ '           ████╗  ██║██╔════╝██╔═══██╗██║   ██║██║████╗ ████║',
+  \ '           ██╔██╗ ██║█████╗  ██║   ██║██║   ██║██║██╔████╔██║',
+  \ '           ██║╚██╗██║██╔══╝  ██║   ██║╚██╗ ██╔╝██║██║╚██╔╝██║',
+  \ '           ██║ ╚████║███████╗╚██████╔╝ ╚████╔╝ ██║██║ ╚═╝ ██║',
+  \ '           ╚═╝  ╚═══╝╚══════╝ ╚═════╝   ╚═══╝  ╚═╝╚═╝     ╚═╝',
+  \ '           ',
+  \ '           ',
+  \]
+                                                  
+                                                  
+                                                  
+                                                  
+                                                  
+                                                  
+                                                  
+                                                  
+
+
 
   let g:startify_custom_header =
         \ 'startify#pad(g:ascii)'
   let g:startify_padding_left = 15
+
+"""" KEYMAP
+""""
+let mapleader = "\<Space>"
+
+" Zoom and resize splits like tmux
+nnoremap <leader>- :wincmd _<cr>:wincmd \|<cr>
+nnoremap <leader>= :wincmd =<cr>
+
+" Nerd Tree 
+nnoremap <leader>n :NERDTreeFocus<CR>
+nnoremap <C-n> :NERDTree<CR>
+nnoremap <C-t> :NERDTreeToggle<CR>
+nnoremap <C-f> :NERDTreeFind<CR>
+
+nnoremap <leader>ff :Files<CR>
+nnoremap <leader>fb :Buffers<CR>
+nnoremap <leader>fc :Commands<CR>
+
+nnoremap <leader>b<Tab> :b#<cr>
+nnoremap <leader>bb :b<Space>
+nnoremap <leader>bk :bnext<CR>
+nnoremap <leader>bj :bprevious<CR>
+nnoremap <leader>bh :Startify<CR>
+
+nnoremap <leader>s :call fzf#vim#ag(expand('<cword>'))<CR>
+
+
+"""" WHICH KEY
+""""
+set timeoutlen=500
+nnoremap <silent> <leader> :WhichKey '<Space>'<CR>
