@@ -5,6 +5,9 @@ set lazyredraw "dont re-render while running macros
 set backspace=indent,eol,start " sane backspace config
 set scrolloff=4 " keep 4 lines below the cursor
 set diffopt+=vertical "vertical git diffs
+set inccommand=nosplit " make text replacement interactive
+set showmatch " show matching bracket
+set hlsearch " Highlight search results
 
 syntax on
 
@@ -18,16 +21,6 @@ set tabstop=2
 set shiftwidth=2
 set softtabstop=2
 set expandtab
-
-" Highlight search results
-set hlsearch
-
-" show matching bracket
-set showmatch
-
-" always use vertical diffs
-set diffopt+=vertical
-
 
 " Set indentation for ruby file types
 autocmd FileType ruby setlocal expandtab shiftwidth=2 tabstop=2
@@ -55,6 +48,7 @@ call plug#begin('~/.vim/plugged')
 
 	Plug 'scrooloose/nerdtree'
   Plug 'vim-airline/vim-airline'
+  Plug 'machakann/vim-highlightedyank'
 
 
 
@@ -102,11 +96,6 @@ function! LinterStatus() abort
         \)
 endfunction
 
-
-
-
-
-
 """" DEOPLETE
 """"
 let g:deoplete#enable_at_startup = 1
@@ -125,15 +114,27 @@ inoremap <silent><expr> <TAB>
 let g:ale_sign_error = 'x'
 let g:ale_sign_warning = '-'
 let g:ale_set_highlights = 0
-let g:ale_linters = {
-      \   'ruby': ['rubocop'],
-      \   'javascript': ['eslint'],
-      \}
-let g:ale_fixers = {
-      \    'ruby': ['rubocop'],
-      \   'javascript': ['eslint'],
-      \}
 let g:ale_fix_on_save = 0
+
+  if (exists('$HOUSECALL'))
+    let g:ale_linters = {
+          \   'ruby': ['rubocop'],
+          \   'javascript': ['eslint'],
+          \}
+    let g:ale_fixers = {
+          \    'ruby': ['rubocop'],
+          \   'javascript': ['eslint'],
+          \}
+  else
+    let g:ale_linters = {
+          \   'ruby': ['standardrb'],
+          \   'javascript': ['eslint'],
+          \}
+    let g:ale_fixers = {
+          \    'ruby': ['standardrb'],
+          \   'javascript': ['eslint'],
+          \}
+  endif
 
 
 """" COMMENTS
@@ -143,8 +144,6 @@ autocmd FileType ruby setlocal commentstring=#\ %s
 
 " auto resize splits on window resize
 autocmd VimResized * :wincmd =
-
-
 
 hi Normal guibg=NONE ctermbg=NONE
 if !has('gui_running')
@@ -157,7 +156,6 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#fnamemod = ':t'
 let g:airline#extensions#tabline#buffer_nr_show = 1
 
-
 let g:airline_section_x      =''
 let g:airline_section_z      =''
 let g:airline_section_y = '%-0.10{LinterStatus()}'
@@ -167,8 +165,6 @@ let g:airline_section_warning=''
 " Exit Vim if NERDTree is the only window left.
 autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() |
     \ quit | endif
-
-
 
 """" Startify
 """"
@@ -204,17 +200,8 @@ let g:startify_lists = [
   \ '           ',
   \ '           ',
   \]
-                                                  
-                                                  
-                                                  
-                                                  
-                                                  
-                                                  
-                                                  
-                                                  
 
-
-
+                                                  
   let g:startify_custom_header =
         \ 'startify#pad(g:ascii)'
   let g:startify_padding_left = 15
@@ -239,14 +226,22 @@ nnoremap <leader>fc :Commands<CR>
 
 nnoremap <leader>b<Tab> :b#<cr>
 nnoremap <leader>bb :b<Space>
+nnoremap <leader>bf :Buffers<CR>
 nnoremap <leader>bk :bnext<CR>
 nnoremap <leader>bj :bprevious<CR>
 nnoremap <leader>bh :Startify<CR>
+nnoremap <leader>bd :bd<CR>
+nnoremap <leader>bc :%bd\|e#\|bd#<cr>\|'"
+
+nnoremap <leader>gs :vertical Git<cr>
 
 nnoremap <leader>s :call fzf#vim#ag(expand('<cword>'))<CR>
+
 
 
 """" WHICH KEY
 """"
 set timeoutlen=500
 nnoremap <silent> <leader> :WhichKey '<Space>'<CR>
+
+autocmd BufEnter * if line2byte('.') == -1 && len(tabpagebuflist()) == 1 | Startify | endif
