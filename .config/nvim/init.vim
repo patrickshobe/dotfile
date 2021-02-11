@@ -58,6 +58,7 @@ call plug#begin('~/.vim/plugged')
 	Plug 'tpope/vim-fugitive'
 	Plug 'tpope/vim-endwise'
 	Plug 'jiangmiao/auto-pairs'
+  Plug 'francoiscabrol/ranger.vim'
 
 	" linting
 	Plug 'dense-analysis/ale'
@@ -72,7 +73,8 @@ call plug#begin('~/.vim/plugged')
 call plug#end()
 colorscheme onedark
 
-"""" rspec
+let g:ranger_map_keys = 0 " disable ranger default keymap
+""" rspec
 """"
 let g:rspec_command = 'call Send_to_Tmux("rspec --drb {spec}\n")'
 map <Leader>t :call RunCurrentSpecFile()<CR>
@@ -223,6 +225,8 @@ nnoremap <C-f> :NERDTreeFind<CR>
 nnoremap <leader>ff :Files<CR>
 nnoremap <leader>fb :Buffers<CR>
 nnoremap <leader>fc :Commands<CR>
+nnoremap <leader>ft :Tags<CR>
+
 
 nnoremap <leader>b<Tab> :b#<cr>
 nnoremap <leader>bb :b<Space>
@@ -236,6 +240,7 @@ nnoremap <leader>bc :%bd\|e#\|bd#<cr>\|'"
 nnoremap <leader>gs :vertical Git<cr>
 
 nnoremap <leader>s :call fzf#vim#ag(expand('<cword>'))<CR>
+nnoremap <leader>r :Ranger<CR>
 
 
 
