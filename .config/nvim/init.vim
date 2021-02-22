@@ -35,10 +35,10 @@ call plug#begin('~/.vim/plugged')
 	" vim ruby language files
 	Plug 'vim-ruby/vim-ruby'
 	Plug 'tpope/vim-rails'
-  Plug 'thoughtbot/vim-rspec'
+  " Plug 'thoughtbot/vim-rspec'
+  Plug 'vim-test/vim-test'
+
   Plug 'jgdavey/tslime.vim'
-	" sensible defaults
-	Plug 'tpope/vim-sensible'
 
 	Plug 'tpope/vim-surround'
 	Plug 'airblade/vim-gitgutter'
@@ -46,11 +46,8 @@ call plug#begin('~/.vim/plugged')
 	Plug 'joshdick/onedark.vim'
 	Plug 'christoomey/vim-tmux-navigator'
 
-	Plug 'scrooloose/nerdtree'
   Plug 'vim-airline/vim-airline'
   Plug 'machakann/vim-highlightedyank'
-
-
 
 	Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 	Plug 'junegunn/fzf.vim'
@@ -69,18 +66,24 @@ call plug#begin('~/.vim/plugged')
   Plug 'mxw/vim-jsx'
   Plug 'mhinz/vim-startify'
   Plug 'liuchengxu/vim-which-key'
+  Plug 'voldikss/vim-floaterm'
+  Plug 'preservim/vimux'
 
 call plug#end()
 colorscheme onedark
 
+let test#strategy = "floaterm"
+let g:test#preserve_screen = 1
+
+
 let g:ranger_map_keys = 0 " disable ranger default keymap
 """ rspec
 """"
-let g:rspec_command = 'call Send_to_Tmux("rspec --drb {spec}\n")'
-map <Leader>t :call RunCurrentSpecFile()<CR>
-map <Leader>s :call RunNearestSpec()<CR>
-map <Leader>l :call RunLastSpec()<CR>
-map <Leader>a :call RunAllSpecs()<CR>
+" let g:rspec_command = 'call Send_to_Tmux("rspec --drb {spec}\n")'
+" map <Leader>t :call RunCurrentSpecFile()<CR>
+" map <Leader>s :call RunNearestSpec()<CR>
+" map <Leader>l :call RunLastSpec()<CR>
+" map <Leader>a :call RunAllSpecs()<CR>
 
 """" LIGHTLINE
 """"
@@ -97,6 +100,15 @@ function! LinterStatus() abort
         \   all_errors
         \)
 endfunction
+
+" floaterm
+let g:floaterm_position='bottomright'
+let g:floaterm_width=0.4
+let g:floaterm_height=0.4
+let g:floaterm_opener='vsplit'
+let g:floaterm_autoclose=1
+let g:floaterm_title=''
+
 
 """" DEOPLETE
 """"
@@ -164,10 +176,6 @@ let g:airline_section_y = '%-0.10{LinterStatus()}'
 let g:airline_section_error  =''
 let g:airline_section_warning=''
 
-" Exit Vim if NERDTree is the only window left.
-autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() |
-    \ quit | endif
-
 """" Startify
 """"
 
@@ -216,12 +224,6 @@ let mapleader = "\<Space>"
 nnoremap <leader>- :wincmd _<cr>:wincmd \|<cr>
 nnoremap <leader>= :wincmd =<cr>
 
-" Nerd Tree 
-nnoremap <leader>n :NERDTreeFocus<CR>
-nnoremap <C-n> :NERDTree<CR>
-nnoremap <C-t> :NERDTreeToggle<CR>
-nnoremap <C-f> :NERDTreeFind<CR>
-
 nnoremap <leader>ff :Files<CR>
 nnoremap <leader>fb :Buffers<CR>
 nnoremap <leader>fc :Commands<CR>
@@ -241,6 +243,20 @@ nnoremap <leader>gs :vertical Git<cr>
 
 nnoremap <leader>s :call fzf#vim#ag(expand('<cword>'))<CR>
 nnoremap <leader>r :Ranger<CR>
+
+nnoremap <leader>tn :TestNearest<CR>
+nnoremap <leader>tf :TestFile<CR>
+nnoremap <leader>ts :TestSuite<CR>
+nnoremap <leader>txs :TestSuite -strategy=vimux<CR>
+nnoremap <leader>tl :TestLast<CR>
+nnoremap <leader>txl :TestLast -strategy=vimux<CR>
+nnoremap <leader>txf :TestFile -strategy=vimux<CR>
+nnoremap <leader>tv :TestVisit<CR>
+nnoremap <leader>tt :FloatermToggle<CR>
+tnoremap <leader>tt <C-\><C-n>:FloatermToggle<CR>
+tnoremap <leader>] <C-\><C-n>
+
+let g:VimuxOrientation = "v"
 
 
 
