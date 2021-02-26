@@ -9,6 +9,8 @@ set inccommand=nosplit " make text replacement interactive
 set showmatch " show matching bracket
 set hlsearch " Highlight search results
 
+runtime macros/matchit.vim
+
 syntax on
 
 
@@ -35,6 +37,10 @@ call plug#begin('~/.vim/plugged')
 	" vim ruby language files
 	Plug 'vim-ruby/vim-ruby'
 	Plug 'tpope/vim-rails'
+  Plug 'kana/vim-textobj-user' " Dependency of vim-textobj-rubyblock
+  Plug 'nelstrom/vim-textobj-rubyblock'
+  Plug 'tpope/vim-bundler'
+  Plug 'tpope/vim-rake'
   " Plug 'thoughtbot/vim-rspec'
   Plug 'vim-test/vim-test'
 
@@ -54,7 +60,6 @@ call plug#begin('~/.vim/plugged')
 	Plug 'tpope/vim-commentary'
 	Plug 'tpope/vim-fugitive'
 	Plug 'tpope/vim-endwise'
-	Plug 'jiangmiao/auto-pairs'
   Plug 'francoiscabrol/ranger.vim'
 
 	" linting
@@ -66,6 +71,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'mxw/vim-jsx'
   Plug 'mhinz/vim-startify'
   Plug 'liuchengxu/vim-which-key'
+
   Plug 'voldikss/vim-floaterm'
   Plug 'preservim/vimux'
 
