@@ -16,6 +16,8 @@ if ! zgen saved; then
   # generate the init script from plugins above
   zgen save
 fi
+setopt HIST_FIND_NO_DUPS
+setopt HIST_IGNORE_ALL_DUPS
 
 export EDITOR=nvim
 
@@ -54,3 +56,4 @@ export PATH="$PATH:/usr/local/opt/mysql@5.6/bin"
 export AWS_VAULT_PROMPT=osascript
 export AWS_VAULT_KEYCHAIN_NAME=login
 
+ctags=/usr/local/bin/ctags

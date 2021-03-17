@@ -8,6 +8,7 @@ set diffopt+=vertical "vertical git diffs
 set inccommand=nosplit " make text replacement interactive
 set showmatch " show matching bracket
 set hlsearch " Highlight search results
+set tags^=.git/tags;~
 
 runtime macros/matchit.vim
 
@@ -35,7 +36,9 @@ set undofile
 " load junegunn/vim-plug
 call plug#begin('~/.vim/plugged')
 	" vim ruby language files
+  Plug 'joe-skb7/cscope-maps'
 	Plug 'vim-ruby/vim-ruby'
+  Plug 'k0kubun/vim-open-github'
 	Plug 'tpope/vim-rails'
   Plug 'kana/vim-textobj-user' " Dependency of vim-textobj-rubyblock
   Plug 'nelstrom/vim-textobj-rubyblock'
@@ -44,7 +47,10 @@ call plug#begin('~/.vim/plugged')
   " Plug 'thoughtbot/vim-rspec'
   Plug 'vim-test/vim-test'
 
+  Plug 'sbdchd/neoformat'
+
   Plug 'jgdavey/tslime.vim'
+  Plug 'vimwiki/vimwiki'
 
 	Plug 'tpope/vim-surround'
 	Plug 'airblade/vim-gitgutter'
@@ -81,6 +87,8 @@ colorscheme onedark
 let test#strategy = "floaterm"
 let g:test#preserve_screen = 1
 
+let g:neoformat_enabled_ruby = ['rubocop',]
+
 
 let g:ranger_map_keys = 0 " disable ranger default keymap
 """ rspec
@@ -93,6 +101,7 @@ let g:ranger_map_keys = 0 " disable ranger default keymap
 
 """" LIGHTLINE
 """"
+let g:vimwiki_list = [{'syntax': 'markdown', 'ext': '.md'}]
 
 function! LinterStatus() abort
   let l:counts = ale#statusline#Count(bufnr(''))
@@ -247,7 +256,8 @@ nnoremap <leader>bc :%bd\|e#\|bd#<cr>\|'"
 
 nnoremap <leader>gs :vertical Git<cr>
 
-nnoremap <leader>s :call fzf#vim#ag(expand('<cword>'))<CR>
+nnoremap <leader>ss :call fzf#vim#ag(expand('<cword>'))<CR>
+nnoremap <leader>st :call fzf#vim#tags(expand('<cword>'))<CR>
 nnoremap <leader>r :Ranger<CR>
 
 nnoremap <leader>tn :TestNearest<CR>
@@ -271,4 +281,3 @@ let g:VimuxOrientation = "v"
 set timeoutlen=500
 nnoremap <silent> <leader> :WhichKey '<Space>'<CR>
 
-autocmd BufEnter * if line2byte('.') == -1 && len(tabpagebuflist()) == 1 | Startify | endif

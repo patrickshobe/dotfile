@@ -9,7 +9,6 @@ __pycache__/
 *.pyc
 dump.rdb
 *.rdb
-/tags
 tags
 # -*- mode: gitignore; -*-
 *~
@@ -56,3 +55,19 @@ flycheck_*.el
 
 # directory configuration
 .dir-locals.el
+# all the fucking tags
+TAGS
+.TAGS
+!TAGS/
+tags
+.tags
+!tags/
+gtags.files
+GTAGS
+GRTAGS
+GPATH
+GSYMS
+cscope.files
+cscope.out
+cscope.in.out
+cscope.po.out
