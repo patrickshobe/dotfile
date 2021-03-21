@@ -8,12 +8,13 @@ set diffopt+=vertical "vertical git diffs
 set inccommand=nosplit " make text replacement interactive
 set showmatch " show matching bracket
 set hlsearch " Highlight search results
-set tags^=.git/tags;~
+set tags^=.git/tags;~ "set tags to be in git
+
+set clipboard=unnamed " use system clip
 
 runtime macros/matchit.vim
 
 syntax on
-
 
 filetype plugin indent on
 filetype on
@@ -37,23 +38,26 @@ set undofile
 call plug#begin('~/.vim/plugged')
 	" vim ruby language files
   Plug 'joe-skb7/cscope-maps'
+
 	Plug 'vim-ruby/vim-ruby'
-  Plug 'k0kubun/vim-open-github'
 	Plug 'tpope/vim-rails'
   Plug 'kana/vim-textobj-user' " Dependency of vim-textobj-rubyblock
   Plug 'nelstrom/vim-textobj-rubyblock'
   Plug 'tpope/vim-bundler'
   Plug 'tpope/vim-rake'
-  " Plug 'thoughtbot/vim-rspec'
+
   Plug 'vim-test/vim-test'
+  Plug 'svermeulen/vim-easyclip'
 
   Plug 'sbdchd/neoformat'
-
   Plug 'jgdavey/tslime.vim'
   Plug 'vimwiki/vimwiki'
 
 	Plug 'tpope/vim-surround'
+	Plug 'tpope/vim-repeat'
+	Plug 'dahu/vim-fanfingtastic' " multi-line F f
 	Plug 'airblade/vim-gitgutter'
+  Plug 'k0kubun/vim-open-github'
 
 	Plug 'joshdick/onedark.vim'
 	Plug 'christoomey/vim-tmux-navigator'
@@ -256,6 +260,7 @@ nnoremap <leader>ss :call fzf#vim#ag(expand('<cword>'))<CR>
 nnoremap <leader>st :call fzf#vim#tags(expand('<cword>'))<CR>
 nnoremap <leader>sf :call fzf#vim#gitfiles('.', {'options':'--query '.expand('<cword>')})<CR>
 nnoremap <leader>r :Ranger<CR>
+let g:endwise_no_mappings = 1
 
 nnoremap <leader>tn :TestNearest<CR>
 nnoremap <leader>tf :TestFile<CR>
