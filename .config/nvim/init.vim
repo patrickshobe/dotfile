@@ -39,6 +39,8 @@ call plug#begin('~/.vim/plugged')
 	" vim ruby language files
   Plug 'joe-skb7/cscope-maps'
 
+  Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+
 	Plug 'vim-ruby/vim-ruby'
 	Plug 'tpope/vim-rails'
   Plug 'kana/vim-textobj-user' " Dependency of vim-textobj-rubyblock
@@ -338,6 +340,13 @@ endif
 inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
                               \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
+lua <<EOF
+require'nvim-treesitter.configs'.setup {
+  highlight = {
+    enable = true,
+  },
+}
+EOF
 
 
 function! s:show_documentation()
