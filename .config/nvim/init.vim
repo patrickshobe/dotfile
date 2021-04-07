@@ -47,6 +47,8 @@ call plug#begin('~/.vim/plugged')
   Plug 'nelstrom/vim-textobj-rubyblock'
   Plug 'tpope/vim-bundler'
   Plug 'tpope/vim-rake'
+  Plug 'kevinhwang91/rnvimr'
+  
 
   Plug 'vim-test/vim-test'
   Plug 'svermeulen/vim-easyclip'
@@ -72,7 +74,6 @@ call plug#begin('~/.vim/plugged')
 	Plug 'tpope/vim-commentary'
 	Plug 'tpope/vim-fugitive'
 	Plug 'tpope/vim-endwise'
-  Plug 'francoiscabrol/ranger.vim'
 
 	" linting
 	Plug 'dense-analysis/ale'
@@ -96,7 +97,6 @@ let g:test#preserve_screen = 1
 let g:neoformat_enabled_ruby = ['rubocop',]
 
 
-let g:ranger_map_keys = 0 " disable ranger default keymap
 """ rspec
 """"
 " let g:rspec_command = 'call Send_to_Tmux("rspec --drb {spec}\n")'
@@ -239,6 +239,11 @@ nnoremap <leader>fb :Buffers<CR>
 nnoremap <leader>fc :Commands<CR>
 nnoremap <leader>ft :Tags<CR>
 
+nnoremap <leader>r :RnvimrToggle<CR>
+nnoremap <leader>rt :RnvimrResize<CR>
+let g:rnvimr_hide_gitignore = 1 " hide gitignore files
+let g:rnvimr_enable_bw = 1 " wipe nvim buffer of file deleted in ranger
+
 " GoTo code navigation.
 nmap <leader>agd <Plug>(coc-definition)
 nmap <leader>agy <Plug>(coc-type-definition)
@@ -254,6 +259,7 @@ nnoremap <leader>bk :bnext<CR>
 nnoremap <leader>bj :bprevious<CR>
 nnoremap <leader>bh :Startify<CR>
 nnoremap <leader>bd :bd<CR>
+nnoremap <leader>bD :BD<CR>
 nnoremap <leader>bc :%bd\|e#\|bd#<cr>\|'"
 
 nnoremap <leader>gs :vertical Git<cr>
@@ -261,7 +267,6 @@ nnoremap <leader>gs :vertical Git<cr>
 nnoremap <leader>ss :call fzf#vim#ag(expand('<cword>'))<CR>
 nnoremap <leader>st :call fzf#vim#tags(expand('<cword>'))<CR>
 nnoremap <leader>sf :call fzf#vim#gitfiles('.', {'options':'--query '.expand('<cword>')})<CR>
-nnoremap <leader>r :Ranger<CR>
 let g:endwise_no_mappings = 1
 
 nnoremap <leader>tn :TestNearest<CR>
@@ -275,6 +280,10 @@ nnoremap <leader>txf :TestFile -strategy=floaterm<CR>
 nnoremap <leader>tt :FloatermToggle<CR>
 tnoremap <leader>tt <C-\><C-n>:FloatermToggle<CR>
 tnoremap <leader>] <C-\><C-n>
+nnoremap <space>e :CocCommand explorer<CR>
+vmap <leader>c  <Plug>(coc-format-selected)
+nmap <leader>c  <Plug>(coc-format-selected)
+
 
 let g:VimuxOrientation = "v"
 
@@ -358,6 +367,25 @@ function! s:show_documentation()
     execute '!' . &keywordprg . " " . expand('<cword>')
   endif
 endfunction
+
+"FZF Buffer Delete
+
+function! s:list_buffers()
+  redir => list
+  silent ls
+  redir END
+  return split(list, "\n")
+endfunction
+
+function! s:delete_buffers(lines)
+  execute 'bwipeout' join(map(a:lines, {_, line -> split(line)[0]}))
+endfunction
+
+command! BD call fzf#run(fzf#wrap({
+  \ 'source': s:list_buffers(),
+  \ 'sink*': { lines -> s:delete_buffers(lines) },
+  \ 'options': '--multi --reverse --bind ctrl-a:select-all+accept'
+\ }))
 
 
 " Remap <C-f> and <C-b> for scroll float windows/popups.
