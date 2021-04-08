@@ -36,8 +36,6 @@ set undofile
 
 " load junegunn/vim-plug
 call plug#begin('~/.vim/plugged')
-	" vim ruby language files
-  Plug 'joe-skb7/cscope-maps'
 
   Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
@@ -47,11 +45,13 @@ call plug#begin('~/.vim/plugged')
   Plug 'nelstrom/vim-textobj-rubyblock'
   Plug 'tpope/vim-bundler'
   Plug 'tpope/vim-rake'
-  Plug 'kevinhwang91/rnvimr'
-  
 
   Plug 'vim-test/vim-test'
+
+  Plug 'kevinhwang91/rnvimr'
+  
   Plug 'svermeulen/vim-easyclip'
+  Plug 'hoob3rt/lualine.nvim'
 
   Plug 'sbdchd/neoformat'
   Plug 'jgdavey/tslime.vim'
@@ -66,8 +66,10 @@ call plug#begin('~/.vim/plugged')
 	Plug 'joshdick/onedark.vim'
 	Plug 'christoomey/vim-tmux-navigator'
 
-  Plug 'vim-airline/vim-airline'
+  " Plug 'vim-airline/vim-airline'
   Plug 'machakann/vim-highlightedyank'
+  Plug 'kyazdani42/nvim-web-devicons'
+Plug 'romgrk/barbar.nvim'
 
 	Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 	Plug 'junegunn/fzf.vim'
@@ -89,6 +91,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'preservim/vimux'
 
 call plug#end()
+set termguicolors 
 colorscheme onedark
 
 let test#strategy = "vimux"
@@ -176,15 +179,45 @@ endif
 
 """" AIRLINE
 """"
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#fnamemod = ':t'
-let g:airline#extensions#tabline#buffer_nr_show = 1
+" let g:airline#extensions#tabline#enabled = 1
+" let g:airline#extensions#tabline#fnamemod = ':t'
+" let g:airline#extensions#tabline#buffer_nr_show = 1
 
-let g:airline_section_x      =''
-let g:airline_section_z      =''
-let g:airline_section_y = '%-0.10{LinterStatus()}'
-let g:airline_section_error  =''
-let g:airline_section_warning=''
+" let g:airline_section_x      =''
+" let g:airline_section_z      =''
+" let g:airline_section_y = '%-0.10{LinterStatus()}'
+" let g:airline_section_error  =''
+" let g:airline_section_warning=''
+
+"""" Lualine
+""""
+let g:lualine = {
+    \'options' : {
+    \  'theme' : 'codedark',
+    \  'section_separators' : ['', ''],
+    \  'component_separators' : ['', ''],
+    \  'icons_enabled' : v:true,
+    \},
+    \'sections' : {
+    \  'lualine_a' : [ ['mode', {'upper': v:true,},], ],
+    \  'lualine_b' : [ ['filetype', {}, ], ],
+    \  'lualine_c' : [ ['', {},], ],
+    \  'lualine_x' : [ '', '', '' ],
+    \  'lualine_y' : [ 'progress' ],
+    \  'lualine_z' : [ 'location'  ],
+    \},
+    \'inactive_sections' : {
+    \  'lualine_a' : [  ],
+    \  'lualine_b' : [  ],
+    \  'lualine_c' : [ 'filename' ],
+    \  'lualine_x' : [ 'location' ],
+    \  'lualine_y' : [  ],
+    \  'lualine_z' : [  ],
+    \},
+    \'extensions' : [ 'fzf' ],
+    \}
+lua require("lualine").setup()
+
 
 """" Startify
 """"
@@ -226,6 +259,11 @@ let g:startify_lists = [
         \ 'startify#pad(g:ascii)'
   let g:startify_padding_left = 15
 
+"""" BARBAR
+let bufferline = get(g:, 'bufferline', {})
+let bufferline.closable = v:false
+let bufferline.icon_separator_active = '▎▎'
+
 """" KEYMAP
 """"
 let mapleader = "\<Space>"
@@ -251,16 +289,15 @@ nmap <leader>agi <Plug>(coc-implementation)
 nmap <leader>agr <Plug>(coc-references)
 
 
-
 nnoremap <leader>b<Tab> :b#<cr>
-nnoremap <leader>bb :b<Space>
+nnoremap <leader>bb :BufferGoto<Space>
 nnoremap <leader>bf :Buffers<CR>
+nnoremap <leader>bp :BufferPick<CR>
 nnoremap <leader>bk :bnext<CR>
 nnoremap <leader>bj :bprevious<CR>
 nnoremap <leader>bh :Startify<CR>
-nnoremap <leader>bd :bd<CR>
+nnoremap <leader>bd :BufferClose<CR>
 nnoremap <leader>bD :BD<CR>
-nnoremap <leader>bc :%bd\|e#\|bd#<cr>\|'"
 
 nnoremap <leader>gs :vertical Git<cr>
 
@@ -392,5 +429,5 @@ command! BD call fzf#run(fzf#wrap({
 " Add (Neo)Vim's native statusline support.
 " NOTE: Please see `:h coc-status` for integrations with external plugins that
 " provide custom statusline: lightline.vim, vim-airline.
-set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+" set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
