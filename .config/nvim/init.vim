@@ -9,6 +9,7 @@ set inccommand=nosplit " make text replacement interactive
 set showmatch " show matching bracket
 set hlsearch " Highlight search results
 set tags^=.git/tags;~ "set tags to be in git
+set updatetime=300 
 
 set clipboard=unnamed " use system clip
 
@@ -38,6 +39,8 @@ set undofile
 call plug#begin('~/.vim/plugged')
 
   Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+  Plug 'neovim/nvim-lspconfig'
+  Plug 'glepnir/lspsaga.nvim'
 
 	Plug 'vim-ruby/vim-ruby'
 	Plug 'tpope/vim-rails'
@@ -69,7 +72,7 @@ call plug#begin('~/.vim/plugged')
   " Plug 'vim-airline/vim-airline'
   Plug 'machakann/vim-highlightedyank'
   Plug 'kyazdani42/nvim-web-devicons'
-Plug 'romgrk/barbar.nvim'
+  Plug 'romgrk/barbar.nvim'
 
 	Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 	Plug 'junegunn/fzf.vim'
@@ -81,18 +84,19 @@ Plug 'romgrk/barbar.nvim'
 	Plug 'dense-analysis/ale'
 
 	" autocomplete
-  Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
   Plug 'mxw/vim-jsx'
   Plug 'mhinz/vim-startify'
   Plug 'liuchengxu/vim-which-key'
 
   Plug 'voldikss/vim-floaterm'
+  Plug 'nvim-lua/completion-nvim'
   Plug 'preservim/vimux'
 
 call plug#end()
 set termguicolors 
 colorscheme onedark
+autocmd BufEnter * lua require'completion'.on_attach()
 
 let test#strategy = "vimux"
 let g:test#preserve_screen = 1
@@ -100,30 +104,10 @@ let g:test#preserve_screen = 1
 let g:neoformat_enabled_ruby = ['rubocop',]
 
 
-""" rspec
-""""
-" let g:rspec_command = 'call Send_to_Tmux("rspec --drb {spec}\n")'
-" map <Leader>t :call RunCurrentSpecFile()<CR>
-" map <Leader>s :call RunNearestSpec()<CR>
-" map <Leader>l :call RunLastSpec()<CR>
-" map <Leader>a :call RunAllSpecs()<CR>
-
 """" LIGHTLINE
 """"
 let g:vimwiki_list = [{'syntax': 'markdown', 'ext': '.md'}]
 
-function! LinterStatus() abort
-  let l:counts = ale#statusline#Count(bufnr(''))
-
-  let l:all_errors = l:counts.error + l:counts.style_error
-  let l:all_non_errors = l:counts.total - l:all_errors
-
-  return l:counts.total == 0 ? '🟢' : printf(
-        \   '🔴 %dW %dE',
-        \   all_non_errors,
-        \   all_errors
-        \)
-endfunction
 
 " floaterm
 let g:floaterm_position='bottomright'
@@ -132,9 +116,6 @@ let g:floaterm_height=0.4
 let g:floaterm_opener='vsplit'
 let g:floaterm_autoclose=1
 let g:floaterm_title=''
-
-
-
 
 """" ALE
 """"
@@ -177,17 +158,6 @@ if !has('gui_running')
   set t_Co=256
 endif
 
-"""" AIRLINE
-""""
-" let g:airline#extensions#tabline#enabled = 1
-" let g:airline#extensions#tabline#fnamemod = ':t'
-" let g:airline#extensions#tabline#buffer_nr_show = 1
-
-" let g:airline_section_x      =''
-" let g:airline_section_z      =''
-" let g:airline_section_y = '%-0.10{LinterStatus()}'
-" let g:airline_section_error  =''
-" let g:airline_section_warning=''
 
 """" Lualine
 """"
@@ -282,13 +252,6 @@ nnoremap <leader>rt :RnvimrResize<CR>
 let g:rnvimr_hide_gitignore = 1 " hide gitignore files
 let g:rnvimr_enable_bw = 1 " wipe nvim buffer of file deleted in ranger
 
-" GoTo code navigation.
-nmap <leader>agd <Plug>(coc-definition)
-nmap <leader>agy <Plug>(coc-type-definition)
-nmap <leader>agi <Plug>(coc-implementation)
-nmap <leader>agr <Plug>(coc-references)
-
-
 nnoremap <leader>b<Tab> :b#<cr>
 nnoremap <leader>bb :BufferGoto<Space>
 nnoremap <leader>bf :Buffers<CR>
@@ -306,6 +269,21 @@ nnoremap <leader>st :call fzf#vim#tags(expand('<cword>'))<CR>
 nnoremap <leader>sf :call fzf#vim#gitfiles('.', {'options':'--query '.expand('<cword>')})<CR>
 let g:endwise_no_mappings = 1
 
+nnoremap <leader>lf :Lspsaga lsp_finder<CR>
+vnoremap <leader>lb <C-U>Lspsaga range_code_action<CR>
+nnoremap <leader>ls :Lspsaga signature_help<CR>
+nnoremap <leader>lr :Lspsaga rename<CR>
+nnoremap <leader>ld :Lspsaga preview_definition<CR>
+
+nnoremap <leader>lc <cmd>lua require'lspsaga.diagnostic'.show_cursor_diagnostics()<CR>
+
+" Use <Tab> and <S-Tab> to navigate through popup menu
+inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
+" Set completeopt to have a better completion experience
+set completeopt=menuone,noinsert,noselect
+
 nnoremap <leader>tn :TestNearest<CR>
 nnoremap <leader>tf :TestFile<CR>
 nnoremap <leader>ts :TestSuite<CR>
@@ -317,9 +295,6 @@ nnoremap <leader>txf :TestFile -strategy=floaterm<CR>
 nnoremap <leader>tt :FloatermToggle<CR>
 tnoremap <leader>tt <C-\><C-n>:FloatermToggle<CR>
 tnoremap <leader>] <C-\><C-n>
-nnoremap <space>e :CocCommand explorer<CR>
-vmap <leader>c  <Plug>(coc-format-selected)
-nmap <leader>c  <Plug>(coc-format-selected)
 
 
 let g:VimuxOrientation = "v"
@@ -330,62 +305,6 @@ let g:VimuxOrientation = "v"
 set timeoutlen=500
 nnoremap <silent> <leader> :WhichKey '<Space>'<CR>
 
-
-" COC vim
-" " Set internal encoding of vim, not needed on neovim, since coc.nvim using some
-" unicode characters in the file autoload/float.vim
-set encoding=utf-8
-
-
-" Some servers have issues with backup files, see #649.
-set nobackup
-set nowritebackup
-
-" Give more space for displaying messages.
-set cmdheight=2
-
-" Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
-" delays and poor user experience.
-set updatetime=300
-
-" Don't pass messages to |ins-completion-menu|.
-set shortmess+=c
-
-" Always show the signcolumn, otherwise it would shift the text each time
-" diagnostics appear/become resolved.
-if has("patch-8.1.1564")
-  " Recently vim can merge signcolumn and number column into one
-  set signcolumn=number
-else
-  set signcolumn=yes
-endif
-
-" Use tab for trigger completion with characters ahead and navigate.
-" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
-" other plugin before putting this into your config.
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
-
-" Use <c-space> to trigger completion.
-if has('nvim')
-  inoremap <silent><expr> <c-space> coc#refresh()
-else
-  inoremap <silent><expr> <c-@> coc#refresh()
-endif
-
-" Make <CR> auto-select the first completion item and notify coc.nvim to
-" format on enter, <cr> could be remapped by other vim plugin
-inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
-                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
-
 lua <<EOF
 require'nvim-treesitter.configs'.setup {
   highlight = {
@@ -394,16 +313,23 @@ require'nvim-treesitter.configs'.setup {
 }
 EOF
 
+lua <<EOF
+require'lspconfig'.solargraph.setup{    
+    cmd = { "solargraph", "stdio" };
+    }
+local saga = require 'lspsaga'
+saga.init_lsp_saga()
+vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+  vim.lsp.diagnostic.on_publish_diagnostics, {
+    virtual_text = false,
+    underline = true,
+    signs = true,
+  }
+)
+vim.cmd [[autocmd CursorHold * lua vim.lsp.diagnostic.show_line_diagnostics()]]
+vim.cmd [[autocmd CursorHoldI * silent! lua vim.lsp.buf.signature_help()]]
+EOF
 
-function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  elseif (coc#rpc#ready())
-    call CocActionAsync('doHover')
-  else
-    execute '!' . &keywordprg . " " . expand('<cword>')
-  endif
-endfunction
 
 "FZF Buffer Delete
 
@@ -424,10 +350,19 @@ command! BD call fzf#run(fzf#wrap({
   \ 'options': '--multi --reverse --bind ctrl-a:select-all+accept'
 \ }))
 
+lua << EOF
+vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+    vim.lsp.diagnostic.on_publish_diagnostics, {
+    underline = false,
+    -- This sets the spacing and the prefix, obviously.
+    virtual_text = {
+        spacing = 4
+        , prefix = '◌'
+        }
 
-" Remap <C-f> and <C-b> for scroll float windows/popups.
-" Add (Neo)Vim's native statusline support.
-" NOTE: Please see `:h coc-status` for integrations with external plugins that
-" provide custom statusline: lightline.vim, vim-airline.
-" set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
-
+    })
+vim.fn.sign_define("LspDiagnosticsSignError", {text = " ⦵", numhl = "LspDiagnosticsDefaultError"})
+vim.fn.sign_define("LspDiagnosticsSignWarning", {text = " ⧾", numhl = "LspDiagnosticsDefaultWarning"})
+vim.fn.sign_define("LspDiagnosticsSignInformation", {text = " ⇒", numhl = "LspDiagnosticsDefaultInformation"})
+vim.fn.sign_define("LspDiagnosticsSignHint", {text = " ⦂", numhl = "LspDiagnosticsDefaultHint"})
+EOF
