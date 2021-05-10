@@ -10,6 +10,7 @@ set showmatch " show matching bracket
 set hlsearch " Highlight search results
 set tags^=.git/tags;~ "set tags to be in git
 set updatetime=300 
+set scrolloff=999 " keep highlighted line centered in screen
 
 set clipboard=unnamed " use system clip
 
@@ -41,6 +42,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
   Plug 'neovim/nvim-lspconfig'
   Plug 'glepnir/lspsaga.nvim'
+  Plug 'junegunn/goyo.vim'
 
 	Plug 'vim-ruby/vim-ruby'
 	Plug 'tpope/vim-rails'
