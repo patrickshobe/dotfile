@@ -38,13 +38,20 @@ set undofile
 call plug#begin('~/.vim/plugged')
 
   Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+  Plug 'kdheepak/lazygit.nvim'
 
 	Plug 'vim-ruby/vim-ruby'
 	Plug 'tpope/vim-rails'
   Plug 'kana/vim-textobj-user' " Dependency of vim-textobj-rubyblock
   Plug 'nelstrom/vim-textobj-rubyblock'
+  Plug 'nvim-telescope/telescope-fzf-writer.nvim'
   Plug 'tpope/vim-bundler'
   Plug 'tpope/vim-rake'
+  Plug 'nvim-lua/popup.nvim'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
+Plug 'nvim-telescope/telescope-github.nvim'
+Plug 'fannheyward/telescope-coc.nvim'
 
   Plug 'vim-test/vim-test'
 
@@ -264,6 +271,37 @@ let bufferline = get(g:, 'bufferline', {})
 let bufferline.closable = v:false
 let bufferline.icon_separator_active = '▎▎'
 
+
+" telescope
+lua <<EOF
+local actions = require('telescope.actions')
+require('telescope').setup{
+  defaults = {
+    mappings = {
+      i = {
+        ["<esc>"] = actions.close
+      },
+    },
+  }
+}
+require('telescope').load_extension('gh')
+require('telescope').setup {
+    extensions = {
+        fzf_writer = {
+            minimum_grep_characters = 2,
+            minimum_files_characters = 2,
+
+            -- Disabled by default.
+            -- Will probably slow down some aspects of the sorter, but can make color highlights.
+            -- I will work on this more later.
+            use_highlighter = true,
+        }
+    }
+}
+require('telescope').load_extension('fzf_writer')
+require('telescope').load_extension('coc')
+EOF
+
 """" KEYMAP
 """"
 let mapleader = "\<Space>"
@@ -272,10 +310,24 @@ let mapleader = "\<Space>"
 nnoremap <leader>- :wincmd _<cr>:wincmd \|<cr>
 nnoremap <leader>= :wincmd =<cr>
 
-nnoremap <leader>ff :Files<CR>
-nnoremap <leader>fb :Buffers<CR>
-nnoremap <leader>fc :Commands<CR>
-nnoremap <leader>ft :Tags<CR>
+" nnoremap <leader>ff :Files<CR>
+" nnoremap <leader>fb :Buffers<CR>
+" nnoremap <leader>fc :Commands<CR>
+" nnoremap <leader>ft :Tags<CR>
+"
+nnoremap <leader>fa <cmd>Telescope builtin<cr>
+nnoremap <leader>ff <cmd>Telescope find_files<cr>
+nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+nnoremap <leader>fb <cmd>Telescope buffers<cr>
+nnoremap <leader>fo <cmd>Telescope oldfiles<cr>
+nnoremap <leader>ft <cmd>Telescope tags<cr>
+nnoremap <leader>fbt <cmd>Telescope current_buffer_tags<cr>
+nnoremap <leader>fsh <cmd>Telescope search_history<cr>
+nnoremap <leader>fq <cmd>Telescope quickfix<cr>
+nnoremap <leader>fib <cmd>Telescope current_buffer_fuzzy_find<cr>
+nnoremap <silent> <leader>lg :LazyGit<CR>
+
+nnoremap <leader>gs <cmd>Telescope git_status<cr>
 
 nnoremap <leader>r :RnvimrToggle<CR>
 nnoremap <leader>rt :RnvimrResize<CR>
@@ -299,7 +351,6 @@ nnoremap <leader>bh :Startify<CR>
 nnoremap <leader>bd :BufferClose<CR>
 nnoremap <leader>bD :BD<CR>
 
-nnoremap <leader>gs :vertical Git<cr>
 
 nnoremap <leader>ss :call fzf#vim#ag(expand('<cword>'))<CR>
 nnoremap <leader>st :call fzf#vim#tags(expand('<cword>'))<CR>
@@ -423,11 +474,4 @@ command! BD call fzf#run(fzf#wrap({
   \ 'sink*': { lines -> s:delete_buffers(lines) },
   \ 'options': '--multi --reverse --bind ctrl-a:select-all+accept'
 \ }))
-
-
-" Remap <C-f> and <C-b> for scroll float windows/popups.
-" Add (Neo)Vim's native statusline support.
-" NOTE: Please see `:h coc-status` for integrations with external plugins that
-" provide custom statusline: lightline.vim, vim-airline.
-" set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
