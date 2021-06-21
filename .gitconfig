@@ -6,9 +6,10 @@
 	br = branch
 	ci = commit
 	st = status
+	unstage = restore --staged
 	magic = push origin -u head
 [core]
-	excludesfile = /Users/pat/.gitignore_global
+	excludesfile = /Users/patrickshobe/.gitignore_global
 	pager = diff-so-fancy | less --tabs=4 -RFX
 [filter "lfs"]
 	required = true

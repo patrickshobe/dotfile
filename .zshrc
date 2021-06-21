@@ -22,7 +22,7 @@ setopt HIST_IGNORE_ALL_DUPS
 export EDITOR=nvim
 
 alias :q='exit'
-alias TERM=xterm-256color tmux
+alias !!!='exit'
 alias cc="clear && tmux clear-history"
 alias vi=nvim
 alias dc=docker-compose
@@ -32,8 +32,10 @@ alias routes="rake routes | fzf -e"
 alias a="arch -x86_64"
 alias ibrew="arch -x86_64 brew"
 alias ctags='/usr/local/bin/ctags'
-alias pec='rspec --drb'
+alias pec='rspec --drb --format p'
 alias splork='RAILS_ENV=test bundle exec spork'
+alias cop='git status -s --porcelain | cut -c4- | xargs rubocop --force-exclusion'
+alias cop-branch='git diff --name-only master... | xargs rubocop --force-exclusion'
 
 
 
@@ -55,5 +57,9 @@ export PATH="$PATH:$HOME/.rvm/bin"
 export PATH="$PATH:/usr/local/opt/mysql@5.6/bin"
 export AWS_VAULT_PROMPT=osascript
 export AWS_VAULT_KEYCHAIN_NAME=login
+export HOUSECALL='pro'
 
+export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
 ctags=/usr/local/bin/ctags
+export TERM=xterm-256color-italic
