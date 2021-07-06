@@ -50,10 +50,11 @@ call plug#begin('~/.vim/plugged')
   Plug 'nvim-telescope/telescope-fzf-writer.nvim'
   Plug 'tpope/vim-rake'
   Plug 'nvim-lua/popup.nvim'
-Plug 'nvim-lua/plenary.nvim'
-Plug 'nvim-telescope/telescope.nvim'
-Plug 'nvim-telescope/telescope-github.nvim'
-Plug 'fannheyward/telescope-coc.nvim'
+  Plug 'nvim-lua/plenary.nvim'
+  Plug 'pwntester/octo.nvim'
+  Plug 'nvim-telescope/telescope.nvim'
+  Plug 'nvim-telescope/telescope-github.nvim'
+  Plug 'fannheyward/telescope-coc.nvim'
   Plug 'tpope/vim-rhubarb'
    Plug  'itchyny/vim-cursorword'
 
@@ -65,6 +66,7 @@ Plug 'fannheyward/telescope-coc.nvim'
 
   Plug 'sbdchd/neoformat'
   Plug 'jgdavey/tslime.vim'
+  Plug 'sindrets/diffview.nvim'
 
 	Plug 'tpope/vim-surround'
 	Plug 'tpope/vim-repeat'
@@ -337,6 +339,7 @@ nnoremap <leader>ffo <cmd>Telescope oldfiles<cr>
 nnoremap <leader>fg <cmd>Telescope live_grep<cr>
 nnoremap <leader>fib <cmd>Telescope current_buffer_fuzzy_find<cr>
 nnoremap <leader>fo <cmd>Telescope oldfiles<cr>
+nnoremap <leader>ftr <cmd>Telescope treesitter<cr>
 nnoremap <leader>ft <cmd>Telescope tags<cr>
 nnoremap <leader>fsh <cmd>Telescope search_history<cr>
 nnoremap <leader>fq <cmd>Telescope quickfix<cr>
