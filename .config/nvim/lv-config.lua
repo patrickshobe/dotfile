@@ -2,6 +2,9 @@ O.format_on_save = false
 O.auto_close_tree = 0
 O.wrap_lines = false
 vim.g.onedark_style = 'darker'
+vim.g.rnvimr_hide_gitignore = 1
+vim.g.rnvimr_enable_bw = 1 
+vim.g.rnvimr_enable_picker = 1
 O.colorscheme = 'onedark'
 O.timeoutlen = 100
 O.document_highlight = true
@@ -10,22 +13,15 @@ O.ignore_case = true
 O.smart_case = true
 O.lushmode = false
 O.transparent_window = false
+O.hl_search = true
 
 -- TODO User Config for predefined plugins
 -- After changing plugin config exit and reopen LunarVim, Run :PackerInstall :PackerCompile
-O.plugin.hop.active = false
-O.plugin.dial.active = false
+
+
 O.plugin.dashboard.active = true
-O.plugin.matchup.active = false
-O.plugin.colorizer.active = false
-O.plugin.numb.active = false
-O.plugin.ts_playground.active = false
-O.plugin.indent_line.active = false
-O.plugin.gitlinker.active = true
-O.plugin.zen.active = false
 O.plugin.lazygit.active = true
 O.plugin.diffview.active = true
-O.plugin.ranger.active = true
 O.custom_plugins = {{"vim-ruby/vim-ruby"}, 
     {"tpope/vim-rails"},
     {"kana/vim-textobj-user"},
@@ -41,12 +37,20 @@ O.custom_plugins = {{"vim-ruby/vim-ruby"},
     {"junegunn/fzf"},
     {"junegunn/fzf.vim"},
     {"pwntester/octo.nvim"},
+    {"machakann/vim-highlightedyank"},
+    {"ggandor/lightspeed.nvim"},
+    {"tpope/vim-surround"},
+    {"tpope/vim-repeat"},
+    {"nvim-telescope/telescope-fzf-writer.nvim"},
+    {"kevinhwang91/rnvimr"},
+    {"tpope/vim-fugitive"},
+    {"tpope/vim-rhubarb"},
+    {"takac/vim-hardtime"},
     }
 
--- dashboard
--- O.dashboard.custom_header = {""}
--- O.dashboard.footer = {""}
 
+vim.g.hardtime_default_on = 1
+vim.g.hardtime_maxcount = 2
 -- if you don't want all the parsers change this to a table of the ones you want
 O.treesitter.ensure_installed = "all"
 O.treesitter.ignore_install = {"haskell"}
@@ -88,4 +92,27 @@ set undofile
 let test#strategy = "vimux"
 let test#ruby#rspec#options = '--drb --format p'
 set scrolloff=999
+nnoremap <leader>sT :call fzf#vim#tags(expand('<cword>'))<CR>
+nnoremap <leader>sF :call fzf#vim#gitfiles('.', {'options':'--query '.expand('<cword>')})<CR>
 ]])
+vim.cmd([[
+nnoremap <leader>sS :call fzf#vim#ag(expand('<cword>'))<CR>
+]])
+
+-- dashboard
+O.dashboard.footer = {"Housecall PRO"}
+O.dashboard.custom_header = {
+    '           ',
+    '           ',
+    '           ███╗   ██╗███████╗ ██████╗ ██╗   ██╗██╗███╗   ███╗',
+    '           ████╗  ██║██╔════╝██╔═══██╗██║   ██║██║████╗ ████║',
+    '           ██╔██╗ ██║█████╗  ██║   ██║██║   ██║██║██╔████╔██║',
+    '           ██║╚██╗██║██╔══╝  ██║   ██║╚██╗ ██╔╝██║██║╚██╔╝██║',
+    '           ██║ ╚████║███████╗╚██████╔╝ ╚████╔╝ ██║██║ ╚═╝ ██║',
+    '           ╚═╝  ╚═══╝╚══════╝ ╚═════╝   ╚═══╝  ╚═╝╚═╝     ╚═╝',
+    '           ',
+    '           ',
+  }
+
+-- keymaps
+vim.api.nvim_set_keymap("n", "<Leader>tf", ":TestFile<CR>", { noremap = true, silent = true })

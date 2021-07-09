@@ -33,6 +33,7 @@ alias a="arch -x86_64"
 alias ibrew="arch -x86_64 brew"
 alias ctags='/usr/local/bin/ctags'
 alias pec='rspec --drb --format p'
+alias be='bundle exec'
 alias splork='RAILS_ENV=test bundle exec spork'
 alias cop='git status -s --porcelain | cut -c4- | xargs rubocop --force-exclusion'
 alias cop-branch='git diff --name-only master... | xargs rubocop --force-exclusion'
@@ -53,7 +54,6 @@ fi
 eval "$(starship init zsh)"
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
-export PATH="$PATH:$HOME/.rvm/bin"
 export PATH="$PATH:/usr/local/opt/mysql@5.6/bin"
 export AWS_VAULT_PROMPT=osascript
 export AWS_VAULT_KEYCHAIN_NAME=login
@@ -63,3 +63,5 @@ export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || pr
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
 ctags=/usr/local/bin/ctags
 export TERM=xterm-256color-italic
+eval "$(rbenv init -)"
+export LIBRARY_PATH="$LIBRARY_PATH:/usr/local/lib"

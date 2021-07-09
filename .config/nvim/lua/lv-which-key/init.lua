@@ -89,6 +89,8 @@ vim.api.nvim_set_keymap("n", "<Leader>b<TAB>", ":b#<CR>", { noremap = true, sile
 vim.api.nvim_set_keymap("n", "<Leader>bd", ":BufferClose<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<Leader>bD", ":BD<CR>", { noremap = true, silent = true })
 
+vim.api.nvim_set_keymap("n", "<Leader>r", ":RnvimrToggle<CR>", { noremap = true, silent = true })
+
 
 -- dashboard
 vim.api.nvim_set_keymap("n", "<Leader>;", ":Dashboard<CR>", { noremap = true, silent = true })
@@ -218,6 +220,7 @@ local mappings = {
     },
     f = { "<cmd>lua vim.lsp.buf.formatting()<cr>", "Format" },
     i = { "<cmd>LspInfo<cr>", "Info" },
+    d = { "<cmd>lua vim.lsp.buf.definition()<cr>", "Goto Definition" },
     j = { "<cmd>lua vim.lsp.diagnostic.goto_next({popup_opts = {border = O.lsp.popup_border}})<cr>", "Next Diagnostic" },
     k = { "<cmd>lua vim.lsp.diagnostic.goto_prev({popup_opts = {border = O.lsp.popup_border}})<cr>", "Prev Diagnostic" },
     q = { "<cmd>Telescope quickfix<cr>", "Quickfix" },
