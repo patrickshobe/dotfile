@@ -6,6 +6,7 @@ if ! zgen saved; then
   # specify plugins here
   zgen oh-my-zsh
   zgen oh-my-zsh plugins/dotenv
+  zgen oh-my-zsh plugins/asdf
   zgen oh-my-zsh plugins/fzf
   zgen oh-my-zsh plugins/git
   zgen oh-my-zsh plugins/zsh-interactive-cd
@@ -25,7 +26,6 @@ alias :q='exit'
 alias !!!='exit'
 alias cc="clear && tmux clear-history"
 alias vi=nvim
-alias dc=docker-compose
 #alias ctags="`brew --prefix`/bin/ctags"
 alias mux='tmux attach -t'
 alias routes="rake routes | fzf -e"
