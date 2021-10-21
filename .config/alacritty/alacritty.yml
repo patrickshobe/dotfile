@@ -1,0 +1,23 @@
+live_config_reload: true
+ 
+font:
+  normal:
+    family: SpaceMono Nerd Font
+    style: Regular
+ 
+  size: 14.5
+
+background_opacity: 0.90
+
+window:
+  padding:
+    x: 20
+    y: 20
+  decorations: none
+
+cursor:
+  style:
+    blinking: on
+
+import:
+ - ~/.config/alacritty/onedark.yml

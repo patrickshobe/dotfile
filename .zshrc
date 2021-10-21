@@ -12,6 +12,7 @@ if ! zgen saved; then
   zgen oh-my-zsh plugins/zsh-interactive-cd
   zgen oh-my-zsh plugins/vi-mode
   zgen oh-my-zsh plugins/themes
+  zgen oh-my-zsh plugins/fzf-tab
   zgen load zsh-users/zsh-syntax-highlighting
 
   # generate the init script from plugins above
