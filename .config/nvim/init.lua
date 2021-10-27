@@ -212,7 +212,6 @@ let test#ruby#rspec#options = '--drb --format p'
 set scrolloff=999
 set number relativenumber 
 set clipboard=unnamed 
-set tags^=.git/tags;~ 
 
 set noshowmode
 nnoremap <leader>sT :call fzf#vim#tags(expand('<cword>'))<CR>
@@ -402,6 +401,11 @@ cmp.setup {
   },
 }
 
+vim.cmd([[
+set tags^=.git/tags;~ 
+]])
+
 
 require('telescope').load_extension('fzf')
+
 
