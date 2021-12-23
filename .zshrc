@@ -51,16 +51,25 @@ if [ -f /Users/pat/.tnsrc ]; then
     source /Users/pat/.tnsrc 
 fi
 
+gch() {
+	git for-each-ref --format='%(refname:short)' refs/heads | fzf | xargs git checkout
+}
+release () { git checkout -b FE-release/$(date '+%Y-%m-%d'); }
+
 eval "$(starship init zsh)"
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
-export PATH="$PATH:$HOME/.rvm/bin"
-export PATH="$PATH:/usr/local/opt/mysql@5.6/bin"
 export AWS_VAULT_PROMPT=osascript
 export AWS_VAULT_KEYCHAIN_NAME=login
 export HOUSECALL='pro'
+source ~/fzf-tab/fzf-tab.plugin.zsh
+zstyle ':fzf-tab:*' fzf-command ftb-tmux-popup
 
 export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
 ctags=/usr/local/bin/ctags
+export TERM=xterm-256color-italic
+export LIBRARY_PATH="$LIBRARY_PATH:/usr/local/lib"
+export PATH=/Users/patrickshobe/.rbenv/shims:/Users/patrickshobe/.nvm/versions/node/v12.14.1/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin:/usr/local/opt/fzf/bin:/usr/local/opt/mysql@5.6/bin:/Users/patrickshobe/.local/bin
+eval "$(rbenv init -)"
 export TERM=xterm-256color-italic

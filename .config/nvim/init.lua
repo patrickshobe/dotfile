@@ -18,6 +18,7 @@ vim.api.nvim_exec(
 local use = require('packer').use
 require('packer').startup(function()
 
+	use {"ellisonleao/glow.nvim"}
   use 'wbthomason/packer.nvim' -- Package manager
   use 'tpope/vim-fugitive' -- Git commands in nvim
   use 'tpope/vim-rhubarb' -- Fugitive-companion to interact with github
@@ -81,6 +82,7 @@ end)
 vim.g.rnvimr_hide_gitignore = 1
 vim.g.rnvimr_enable_bw = 1 
 vim.g.rnvimr_enable_picker = 1
+vim.g.gutentags_cache_dir = '~/.tags'
 
 --Incremental live completion (note: this is now a default on master)
 vim.o.inccommand = 'nosplit'
