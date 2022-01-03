@@ -20,6 +20,7 @@ require('packer').startup(function()
 
 	use {"ellisonleao/glow.nvim"}
   use 'wbthomason/packer.nvim' -- Package manager
+  use 'RRethy/nvim-treesitter-textsubjects'
   use 'tpope/vim-fugitive' -- Git commands in nvim
   use 'tpope/vim-rhubarb' -- Fugitive-companion to interact with github
   use 'tpope/vim-commentary' -- "gc" to comment visual regions/lines
@@ -61,6 +62,10 @@ use "ggandor/lightspeed.nvim"
 use "tpope/vim-surround"
 use "tpope/vim-repeat"
 use "kevinhwang91/rnvimr"
+use {
+  "mickael-menu/zk-nvim",
+  requires = { "neovim/nvim-lspconfig" }
+}
 
 use {
     'neovim/nvim-lspconfig',
@@ -231,12 +236,12 @@ require('nvim-treesitter.configs').setup {
   },
   incremental_selection = {
     enable = true,
-    keymaps = {
-      init_selection = 'gnn',
-      node_incremental = 'grn',
-      scope_incremental = 'grc',
-      node_decremental = 'grm',
-    },
+    keymaps = { 
+	    init_selection = '<CR>',
+	    scope_incremental = '<CR>',
+	    node_incremental = '<TAB>',
+	    node_decremental = '<S-TAB>',
+    }
   },
   indent = {
     enable = true,
@@ -403,11 +408,18 @@ cmp.setup {
   },
 }
 
-vim.cmd([[
-set tags^=.git/tags;~ 
-]])
+require'nvim-treesitter.configs'.setup {
+    textsubjects = {
+        enable = true,
+        keymaps = {
+            ['.'] = 'textsubjects-smart',
+            [';'] = 'textsubjects-container-outer',
+        }
+    },
+}
 
-
+require("zk").setup()
+require("telescope").load_extension("zk")
 require('telescope').load_extension('fzf')
 
 

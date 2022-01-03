@@ -22,8 +22,10 @@ setopt HIST_FIND_NO_DUPS
 setopt HIST_IGNORE_ALL_DUPS
 
 export EDITOR=nvim
+export ZK_NOTEBOOK_DIR=~/zk
 
 alias :q='exit'
+alias be='bundle exec'
 alias !!!='exit'
 alias cc="clear && tmux clear-history"
 alias vi=nvim
