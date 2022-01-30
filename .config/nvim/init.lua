@@ -20,10 +20,12 @@ require('packer').startup(function()
 
 	use {"ellisonleao/glow.nvim"}
   use 'wbthomason/packer.nvim' -- Package manager
+  use { "rcarriga/vim-ultest", requires = {"vim-test/vim-test"}, run = ":UpdateRemotePlugins" }
   use 'RRethy/nvim-treesitter-textsubjects'
   use 'tpope/vim-fugitive' -- Git commands in nvim
   use 'tpope/vim-rhubarb' -- Fugitive-companion to interact with github
   use 'tpope/vim-commentary' -- "gc" to comment visual regions/lines
+  use 'kdheepak/lazygit.nvim'
   use 'ludovicchabant/vim-gutentags' -- Automatic tags management
   -- UI to select things (files, grep results, open buffers...)
   use { 'nvim-telescope/telescope.nvim', requires = { 'nvim-lua/plenary.nvim' } }
@@ -183,39 +185,41 @@ require('telescope').setup {
   },
 }
 --Add leader shortcuts
-vim.api.nvim_set_keymap('n', '<leader><space>', [[<cmd>lua require('telescope.builtin').buffers()<CR>]], { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>sb', [[<cmd>lua require('telescope.builtin').buffers()<CR>]], { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>sf', [[<cmd>lua require('telescope.builtin').find_files({previewer = false})<CR>]], { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>sb', [[<cmd>lua require('telescope.builtin').current_buffer_fuzzy_find()<CR>]], { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>sib', [[<cmd>lua require('telescope.builtin').current_buffer_fuzzy_find()<CR>]], { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>sh', [[<cmd>lua require('telescope.builtin').search_history()<CR>]], { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>sg', [[<cmd>lua require('telescope.builtin').git_status()<CR>]], { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>st', [[<cmd>lua require('telescope.builtin').tags()<CR>]], { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>sd', [[<cmd>lua require('telescope.builtin').grep_string()<CR>]], { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>sp', [[<cmd>lua require('telescope.builtin').live_grep()<CR>]], { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>so', [[<cmd>lua require('telescope.builtin').tags{ only_current_buffer = true }<CR>]], { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>?', [[<cmd>lua require('telescope.builtin').oldfiles()<CR>]], { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>so', [[<cmd>lua require('telescope.builtin').oldfiles()<CR>]], { noremap = true, silent = true })
 
 vim.api.nvim_set_keymap('n', '<leader>ch', [[<cmd>lua require('telescope.builtin').command_history()<CR>]], { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>cf', [[<cmd>lua require('telescope.builtin').commands()<CR>]], { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader><space>', [[<cmd>lua require('telescope.builtin').commands()<CR>]], { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>ct', [[<cmd>lua require('telescope.builtin').commands()<CR>]], { noremap = true, silent = true })
 
 vim.api.nvim_set_keymap('n', '<leader>r', [[:RnvimrToggle<CR>]], { noremap = true, silent = true })
 
 vim.api.nvim_set_keymap('n', '<leader>bj', [[:BufferPick<CR>]], { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>bn', [[:BufferMoveNext<CR>]], { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>bn', [[:BufferPrevious<CR>]], { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>bp', [[:BufferPrevious<CR>]], { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>bl', [[:BufferLast<CR>]], { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>bd', [[:BufferDelete<CR>]], { noremap = true, silent = true })
 
 vim.api.nvim_set_keymap('n', '<leader>tf', [[:TestFile<CR>]], { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>tn', [[:TestNearest<CR>]], { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>tl', [[:TestLast<CR>]], { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>bl', [[:TestSuite<CR>]], { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>bd', [[:TestVisit<CR>]], { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>tv', [[:TestVisit<CR>]], { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>tu', [[:UltestNearest<CR>]], { noremap = true, silent = true })
 
 
 vim.cmd([[
 set undodir=~/.vim/undo-dir
 set undofile
+set cursorline
 let test#strategy = "vimux"
-let test#ruby#rspec#options = '--drb --format p'
+let test#ruby#rspec#options = '--format p'
 set scrolloff=999
 set number relativenumber 
 set clipboard=unnamed 
@@ -226,6 +230,14 @@ nnoremap <leader>sF :call fzf#vim#gitfiles('.', {'options':'--query '.expand('<c
 ]])
 vim.cmd([[
 nnoremap <leader>sS :call fzf#vim#ag(expand('<cword>'))<CR>
+filetype plugin indent on
+" On pressing tab, insert 2 spaces
+set expandtab
+" show existing tab with 2 spaces width
+set tabstop=2
+set softtabstop=2
+" when indenting with '>', use 2 spaces width
+set shiftwidth=2
 ]])
 
 -- Treesitter configuration
@@ -418,7 +430,12 @@ require'nvim-treesitter.configs'.setup {
     },
 }
 
-require("zk").setup()
+require("zk").setup({
+  -- can be "telescope", "fzf" or "select" (`vim.ui.select`)
+  -- it's recommended to use "telescope" or "fzf"
+  picker = "telescope",
+
+})
 require("telescope").load_extension("zk")
 require('telescope').load_extension('fzf')
 

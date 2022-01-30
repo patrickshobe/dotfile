@@ -39,6 +39,8 @@
     prompt = true
 [diff]
     tool = nvimdiff
+[editor]
+    tool = vim
 [difftool "nvimdiff"]
     cmd = "lvim -d -u ~/.vimrc \"$LOCAL\" \"$REMOTE\""
 
