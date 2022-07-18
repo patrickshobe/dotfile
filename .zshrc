@@ -1,4 +1,5 @@
 source "${HOME}/.zgen/zgen.zsh"
+[[ -n $TMUX ]] && export TERM="xterm-256color"
 ZSH_DISABLE_COMPFIX="true"
 # if the init script doesn't exist
 if ! zgen saved; then
@@ -30,7 +31,6 @@ alias mux='tmux attach -t'
 alias routes="rake routes | fzf -e"
 alias a="arch -x86_64"
 alias ibrew="arch -x86_64 brew"
-alias ctags='/usr/local/bin/ctags'
 alias pec='rspec --drb --format p'
 alias splork='RAILS_ENV=test bundle exec spork'
 alias cop='git status -s --porcelain | cut -c4- | xargs rubocop --force-exclusion'
@@ -56,8 +56,6 @@ release () { git checkout -b FE-release/$(date '+%Y-%m-%d'); }
 
 eval "$(starship init zsh)"
 
-# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
-export HOUSECALL='pro'
 source ~/fzf-tab/fzf-tab.plugin.zsh
 zstyle ':fzf-tab:*' fzf-command ftb-tmux-popup
 
@@ -70,11 +68,5 @@ setopt HIST_FIND_NO_DUPS
 setopt HIST_SAVE_NO_DUPS
 setopt HIST_BEEP
 
-export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
-alias usenvm='[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' # This loads nvm
-ctags=/usr/local/bin/ctags
 export TERM=xterm-256color-italic
-export LIBRARY_PATH="$LIBRARY_PATH:/usr/local/lib"
-export PATH=/Users/patrickshobe/.rbenv/shims:/Users/patrickshobe/.nvm/versions/node/v12.14.1/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin:/usr/local/opt/fzf/bin:/usr/local/opt/mysql@5.6/bin:/Users/patrickshobe/.local/bin
 eval "$(rbenv init -)"
-export TERM=xterm-256color-italic
