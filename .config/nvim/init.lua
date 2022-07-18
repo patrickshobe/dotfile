@@ -47,42 +47,40 @@ require('packer').startup(function()
 
   use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make' } -- Search driver for telescope
 
+  use {'vimpostor/vim-tpipeline'} -- push statusline to tmux?
+
   use "vim-ruby/vim-ruby"
-use "tpope/vim-rails"
-use "kana/vim-textobj-user"
-use "nelstrom/vim-textobj-rubyblock"
-use "itchyny/vim-cursorword"
-use "vim-test/vim-test"
-use "mxw/vim-jsx"
-use "tpope/vim-endwise"
-use "preservim/vimux"
-use "junegunn/fzf"
-use "junegunn/fzf.vim"
-use "pwntester/octo.nvim"
-use "machakann/vim-highlightedyank"
-use "ggandor/lightspeed.nvim"
-use "tpope/vim-surround"
-use "tpope/vim-repeat"
-use "kevinhwang91/rnvimr"
-use {
-  "mickael-menu/zk-nvim",
-  requires = { "neovim/nvim-lspconfig" }
-}
-
-use {
-    'neovim/nvim-lspconfig',
-    'williamboman/nvim-lsp-installer',
-}
-use {
-  'romgrk/barbar.nvim',
-  requires = {'kyazdani42/nvim-web-devicons'}
-}
-
-use {
-    'christoomey/vim-tmux-navigator',
-}
-
-
+  use "tpope/vim-rails"
+  use "kana/vim-textobj-user"
+  use "nelstrom/vim-textobj-rubyblock"
+  use "itchyny/vim-cursorword"
+  use "vim-test/vim-test"
+  use "mxw/vim-jsx"
+  use "tpope/vim-endwise"
+  use "preservim/vimux"
+  use "junegunn/fzf"
+  use "junegunn/fzf.vim"
+  use "pwntester/octo.nvim"
+  use "machakann/vim-highlightedyank"
+  use "ggandor/lightspeed.nvim"
+  use "tpope/vim-surround"
+  use "tpope/vim-repeat"
+  use "kevinhwang91/rnvimr"
+  use 'christoomey/vim-tmux-navigator'
+  use "folke/which-key.nvim"
+  use 'nanotee/nvim-lsp-basics'
+  use {
+    "mickael-menu/zk-nvim",
+    requires = { "neovim/nvim-lspconfig" }
+  }
+  use {
+      'neovim/nvim-lspconfig',
+      'williamboman/nvim-lsp-installer',
+  }
+  use {
+    'romgrk/barbar.nvim',
+    requires = {'kyazdani42/nvim-web-devicons'}
+  }
 end)
 
 
@@ -114,8 +112,8 @@ vim.wo.signcolumn = 'yes'
 
 --Set colorscheme (order is important here)
 vim.o.termguicolors = true
-vim.g.onedark_transparent_background = true
-require('onedark').setup()
+require('onedark').setup({transparent = true})
+require('onedark').load()
 --Set statusbar
 vim.g.lightline = {
   colorscheme = 'one',
@@ -184,38 +182,60 @@ require('telescope').setup {
     },
   },
 }
---Add leader shortcuts
-vim.api.nvim_set_keymap('n', '<leader>sb', [[<cmd>lua require('telescope.builtin').buffers()<CR>]], { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>sf', [[<cmd>lua require('telescope.builtin').find_files({previewer = false})<CR>]], { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>sib', [[<cmd>lua require('telescope.builtin').current_buffer_fuzzy_find()<CR>]], { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>sh', [[<cmd>lua require('telescope.builtin').search_history()<CR>]], { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>sg', [[<cmd>lua require('telescope.builtin').git_status()<CR>]], { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>st', [[<cmd>lua require('telescope.builtin').tags()<CR>]], { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>sd', [[<cmd>lua require('telescope.builtin').grep_string()<CR>]], { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>sp', [[<cmd>lua require('telescope.builtin').live_grep()<CR>]], { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>so', [[<cmd>lua require('telescope.builtin').oldfiles()<CR>]], { noremap = true, silent = true })
 
-vim.api.nvim_set_keymap('n', '<leader>ch', [[<cmd>lua require('telescope.builtin').command_history()<CR>]], { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader><space>', [[<cmd>lua require('telescope.builtin').commands()<CR>]], { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>ct', [[<cmd>lua require('telescope.builtin').commands()<CR>]], { noremap = true, silent = true })
 
 vim.api.nvim_set_keymap('n', '<leader>r', [[:RnvimrToggle<CR>]], { noremap = true, silent = true })
 
-vim.api.nvim_set_keymap('n', '<leader>bj', [[:BufferPick<CR>]], { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>bn', [[:BufferMoveNext<CR>]], { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>bp', [[:BufferPrevious<CR>]], { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>bl', [[:BufferLast<CR>]], { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>bd', [[:BufferDelete<CR>]], { noremap = true, silent = true })
 
-vim.api.nvim_set_keymap('n', '<leader>tf', [[:TestFile<CR>]], { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>tn', [[:TestNearest<CR>]], { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>tl', [[:TestLast<CR>]], { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>tv', [[:TestVisit<CR>]], { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>tu', [[:UltestNearest<CR>]], { noremap = true, silent = true })
+local wk = require("which-key")
+wk.setup{}
+wk.register({
+  f = {
+    name = "find", -- optional group name
+    f = { "<cmd>Telescope find_files<cr>", "Find File" }, -- create a binding with label
+    o = { "<cmd>Telescope oldfiles<cr>", "Open Recent File", noremap=false }, -- additional options for creating the keymap
+  },
+  s = {
+    name = "Search", 
+    ch = { "<cmd>lua require('telescope.builtin').current_buffer_fuzzy_find()<CR>", "Current Buffer Fuzzy Find" },
+    f = { "<cmd>lua require('telescope.builtin').git_files()<CR>", "Find Git Files" }, 
+    F = { "<cmd>lua require('telescope.builtin').find_files()<CR>", "Find File" }, 
+    g = { "<cmd>lua require('telescope.builtin').git_status()<CR>", "Git Status" }, 
+    h = { "<cmd>lua require('telescope.builtin').search_history()<CR>", "History" }, 
+    ib = { "<cmd>lua require('telescope.builtin').current_buffer_fuzzy_find()<CR>", "Current Buffer Fuzzy Find" }, 
+    o = { "<cmd>lua require('telescope.builtin').oldfiles()<CR>", "Git Status" }, 
+    t = { "<cmd>lua require('telescope.builtin').tags()<CR>", "Tags" }, 
+    },
+  b = {
+    name = "Buffer", 
+    d = { "<cmd>BufferClose<CR>", "Close" }, 
+    j = { "<cmd>BufferPick<CR>", "Pick" }, 
+    l = { "<cmd>BufferLast<CR>", "Pick" }, 
+    n = { "<cmd>BufferMoveNext<CR>", "Next" }, 
+    p = { "<cmd>BufferPrevious<CR>", "Previous" }, 
+    s = { "<cmd>lua require('telescope.builtin').buffers()<CR>", "Search" }, 
+    },
+  t = {
+    name = "test", 
+    f = { "<cmd>TestFile<cr>", "file" }, 
+    n = { "<cmd>TestNearest<cr>", "nearest" }, 
+    l = { "<cmd>TestLast<cr>", "last" }, 
+    v = { "<cmd>TestVisit<cr>", "visit" }, 
+    },
+  l = {
+    name = "lsp", 
+    r = { "<cmd>Telescope lsp_references<CR>", "References" }, 
+    d = { "<cmd>Telescope lsp_definitions<CR>", "Diagnostics" }, 
+    t = { "<cmd>Telescope treesitter<CR>", "Diagnostics" }, 
+    }
+
+}, { prefix = "<leader>" })
 
 
 vim.cmd([[
 set undodir=~/.vim/undo-dir
+set mouse=""
 set undofile
 set cursorline
 let test#strategy = "vimux"
@@ -223,7 +243,6 @@ let test#ruby#rspec#options = '--format p'
 set scrolloff=999
 set number relativenumber 
 set clipboard=unnamed 
-
 set noshowmode
 nnoremap <leader>sT :call fzf#vim#tags(expand('<cword>'))<CR>
 nnoremap <leader>sF :call fzf#vim#gitfiles('.', {'options':'--query '.expand('<cword>')})<CR>
@@ -238,6 +257,8 @@ set tabstop=2
 set softtabstop=2
 " when indenting with '>', use 2 spaces width
 set shiftwidth=2
+let g:gutentags_cache_dir = '~/.tags'
+
 ]])
 
 -- Treesitter configuration
@@ -295,8 +316,12 @@ require('nvim-treesitter.configs').setup {
 
 -- LSP settings
 local nvim_lsp = require 'lspconfig'
-local on_attach = function(_, bufnr)
+local on_attach = function(client, bufnr)
   vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+          local basics = require('lsp_basics')
+
+        basics.make_lsp_commands(client, bufnr)
+        basics.make_lsp_mappings(client, bufnr)
 
   local opts = { noremap = true, silent = true }
   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
@@ -430,11 +455,27 @@ require'nvim-treesitter.configs'.setup {
     },
 }
 
+
 require("zk").setup({
   -- can be "telescope", "fzf" or "select" (`vim.ui.select`)
   -- it's recommended to use "telescope" or "fzf"
   picker = "telescope",
 
+  lsp = {
+    -- `config` is passed to `vim.lsp.start_client(config)`
+    config = {
+      cmd = { "zk", "lsp" },
+      name = "zk",
+      -- on_attach = ...
+      -- etc, see `:h vim.lsp.start_client()`
+    },
+
+    -- automatically attach buffers in a zk notebook that match the given filetypes
+    auto_attach = {
+      enabled = true,
+      filetypes = { "markdown" },
+    },
+  },
 })
 require("telescope").load_extension("zk")
 require('telescope').load_extension('fzf')

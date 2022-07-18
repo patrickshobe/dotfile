@@ -5,19 +5,23 @@ font:
     family: SpaceMono Nerd Font
     style: Regular
  
-  size: 14.5
+  size: 15.5
 
-background_opacity: 0.90
 
 window:
   padding:
     x: 20
     y: 20
   decorations: none
+  opacity: 0.91
 
 cursor:
   style:
     blinking: on
 
+key_bindings:
+- { key: Q, mods: Control, chars: "\x11" }
+
 import:
  - ~/.config/alacritty/onedark.yml
+

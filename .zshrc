@@ -5,12 +5,8 @@ if ! zgen saved; then
 
   # specify plugins here
   zgen oh-my-zsh
-  zgen oh-my-zsh plugins/dotenv
-  zgen oh-my-zsh plugins/asdf
   zgen oh-my-zsh plugins/fzf
   zgen oh-my-zsh plugins/git
-  zgen oh-my-zsh plugins/zsh-interactive-cd
-  zgen oh-my-zsh plugins/vi-mode
   zgen oh-my-zsh plugins/themes
   zgen oh-my-zsh plugins/fzf-tab
   zgen load zsh-users/zsh-syntax-highlighting
@@ -61,14 +57,21 @@ release () { git checkout -b FE-release/$(date '+%Y-%m-%d'); }
 eval "$(starship init zsh)"
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
-export AWS_VAULT_PROMPT=osascript
-export AWS_VAULT_KEYCHAIN_NAME=login
 export HOUSECALL='pro'
 source ~/fzf-tab/fzf-tab.plugin.zsh
 zstyle ':fzf-tab:*' fzf-command ftb-tmux-popup
 
+setopt EXTENDED_HISTORY
+setopt HIST_EXPIRE_DUPS_FIRST
+setopt HIST_IGNORE_DUPS
+setopt HIST_IGNORE_ALL_DUPS
+setopt HIST_IGNORE_SPACE
+setopt HIST_FIND_NO_DUPS
+setopt HIST_SAVE_NO_DUPS
+setopt HIST_BEEP
+
 export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+alias usenvm='[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' # This loads nvm
 ctags=/usr/local/bin/ctags
 export TERM=xterm-256color-italic
 export LIBRARY_PATH="$LIBRARY_PATH:/usr/local/lib"
