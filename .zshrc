@@ -54,6 +54,12 @@ gch() {
 }
 release () { git checkout -b FE-release/$(date '+%Y-%m-%d'); }
 
+usenvm() {
+  export NVM_DIR="$HOME/.nvm"
+  [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
+  [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"
+}
+
 eval "$(starship init zsh)"
 
 source ~/fzf-tab/fzf-tab.plugin.zsh
@@ -68,5 +74,4 @@ setopt HIST_FIND_NO_DUPS
 setopt HIST_SAVE_NO_DUPS
 setopt HIST_BEEP
 
-export TERM=xterm-256color-italic
 eval "$(rbenv init -)"
