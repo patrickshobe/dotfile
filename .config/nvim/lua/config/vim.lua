@@ -11,15 +11,10 @@ vim.cmd([[
   set undodir=~/.vim/undo-dir
   set undofile
   set cursorline
-
-  let test#strategy = "vimux"
-  let test#ruby#rspec#options = '--format p'
-  let g:ultest_deprecation_notice = 0
-
-  set scrolloff=999
   set number relativenumber 
   set clipboard=unnamed 
   set noshowmode
+  set scrolloff=999
 ]])
 vim.cmd([[
   filetype plugin indent on
@@ -34,12 +29,9 @@ vim.cmd([[
 
 vim.o.hlsearch = true
 
---Do not save when switching buffers (note: this is now a default on master)
-vim.o.hidden = true
---Enable mouse mode
-vim.o.mouse = 'a'
 --Enable break indent
 vim.o.breakindent = true
+
 --Save undo history
 vim.opt.undofile = true
 --Case insensitive searching UNLESS /C or capital in search
@@ -57,4 +49,3 @@ vim.g.loaded_netrwPlugin = 1
 vim.api.nvim_set_keymap('', '<Space>', '<Nop>', { noremap = true, silent = true })
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
-
