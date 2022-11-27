@@ -43,11 +43,17 @@ neotest.setup({
   },
   output_panel = {
     enabled = true,
-    open = "botright vsplit"
+    open = "botright 10 split"
   },
   strategies = {
     integrated = {
-      width = 60
     }
   },
 })
+
+-- Legacy testing for debugging in tmux
+vim.cmd([[
+  let test#strategy = "vimux"
+  let test#ruby#rspec#options = '--format p'
+]])
+

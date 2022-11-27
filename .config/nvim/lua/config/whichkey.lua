@@ -28,9 +28,12 @@ wk.register({
     l = { "<cmd>lua require('neotest').run.last()<cr>", "last" }, 
     n = { "<cmd>lua require('neotest').run.run()<cr>", "nearest" }, 
     s = { "<cmd>lua require('neotest').run.stop()<cr>", "stop" }, 
-    op = { "<cmd>lua require('neotest').output_panel.toggle()<cr>", "output panel" }, 
-    ot = { "<cmd>lua require('neotest').summary.toggle()<cr>", "summary" }, 
-    oo = { "<cmd>lua require('neotest').output.open()<cr>", "output" }, 
+    p = { "<cmd>lua require('neotest').output_panel.toggle()<cr>", "output panel" }, 
+    y = { "<cmd>lua require('neotest').summary.toggle()<cr>", "summary" }, 
+    o = { "<cmd>lua require('neotest').output.open()<cr>", "output" }, 
+    zf = { "<cmd>TestFile<cr>", "file" }, 
+    zn = { "<cmd>TestNearest<cr>", "nearest" }, 
+    zl = { "<cmd>TestLast<cr>", "last" }, 
   },
   l = {
     name = "lsp", 
@@ -46,6 +49,9 @@ wk.register({
     c = { "<cmd>NvimTreeCollapse<CR>", "Collapse" }, 
     f = { "<cmd>NvimTreeFindFile<CR>", "Find File" }, 
     t = { "<cmd>NvimTreeToggle<CR>", "Toggle" }, 
-  }
+  },
+  ["<space>"] = { "<cmd>Telescope<CR>", "Telescope" }, 
+  c = { "<cmd>Telescope commands<CR>", "Commands" }, 
+
 
 }, { prefix = "<leader>" })

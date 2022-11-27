@@ -61,8 +61,6 @@ require('packer').startup(function()
   use 'L3MON4D3/LuaSnip' -- Snippets plugin
   use 'rafamadriz/friendly-snippets'
 
-
-
   use { 'lewis6991/gitsigns.nvim', requires = { 'nvim-lua/plenary.nvim' } }
 
   use {
@@ -95,11 +93,24 @@ require('packer').startup(function()
     config = function()
       require"startup".setup()
     end
-  }use {
+  }
+  use {
     "nvim-zh/colorful-winsep.nvim",
     config = function ()
       require('colorful-winsep').setup()
     end
+  }
+  use "vim-test/vim-test"
+  use "preservim/vimux"
+  use "dhruvasagar/vim-zoom"
+  use {
+    'sudormrfbin/cheatsheet.nvim',
+
+    requires = {
+      {'nvim-telescope/telescope.nvim'},
+      {'nvim-lua/popup.nvim'},
+      {'nvim-lua/plenary.nvim'},
+    }
   }
 end
 )
