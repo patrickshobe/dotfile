@@ -56,4 +56,3 @@ vim.cmd([[
   let test#strategy = "vimux"
   let test#ruby#rspec#options = '--format p'
 ]])
-

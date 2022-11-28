@@ -7,10 +7,12 @@ local servers = { 'dockerls',
   'jsonls',
   'ruby_ls',
   'solargraph',
+  'sumneko_lua',
   'tailwindcss',
   'tsserver',
   'yamlls',
-  'zk'}
+  'zk' }
+
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
     on_attach = function(client, bufnr)

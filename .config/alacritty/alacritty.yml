@@ -13,7 +13,7 @@ window:
     x: 20
     y: 20
   decorations: none
-  opacity: 0.91
+  opacity: 0.96
 
 cursor:
   style:
