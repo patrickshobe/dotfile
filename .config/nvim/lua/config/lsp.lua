@@ -5,8 +5,8 @@ local servers = { 'dockerls',
   'eslint',
   'html',
   'jsonls',
-  'ruby_ls',
   'solargraph',
+  'ruby_ls',
   'sumneko_lua',
   'tailwindcss',
   'tsserver',
@@ -24,3 +24,14 @@ for _, lsp in ipairs(servers) do
     capabilities = capabilities,
   }
 end
+
+ require('lint').linters_by_ft = {
+   ruby = {'rubocop',}
+ }
+
+ vim.api.nvim_create_autocmd({ "BufWritePost", "BufRead", "TextChanged", "InsertLeave" }, {
+   callback = function()
+     require("lint").try_lint()
+   end,
+ })
+

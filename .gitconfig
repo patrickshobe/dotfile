@@ -1,6 +1,6 @@
 [user]
 	name = Patrick Shobe
-	email = patrick@shobe.dev
+	email = patrick.shobe@housecallpro.com
 [alias]
 	co = checkout
 	br = branch
@@ -16,8 +16,6 @@
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
-[commit]
-  template = ~/.gitmessage
 [color]
 	ui = true
 [color "diff-highlight"]

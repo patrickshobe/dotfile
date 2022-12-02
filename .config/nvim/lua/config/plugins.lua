@@ -11,6 +11,7 @@ vim.api.nvim_exec(
 local use = require('packer').use
 require('packer').startup(function()
   use 'wbthomason/packer.nvim' -- Package manager
+  use 'mfussenegger/nvim-lint' -- Linting
 
   use 'kdheepak/lazygit.nvim' -- Git gui
   use 'tpope/vim-fugitive' -- Git commands in nvim
@@ -48,6 +49,12 @@ require('packer').startup(function()
     },
   }
   use "folke/which-key.nvim" -- keymap viewer
+  use {
+    'francoiscabrol/ranger.vim',
+    requires = {
+      'rbgrouleff/bclose.vim'
+    },
+  }
 
   use 'ludovicchabant/vim-gutentags' -- Automatic tags management
   use "williamboman/mason.nvim" -- lsp dependency manager
@@ -91,13 +98,6 @@ require('packer').startup(function()
   use {
     'romgrk/barbar.nvim',
     requires = { 'kyazdani42/nvim-web-devicons' }
-  }
-  use {
-    "startup-nvim/startup.nvim",
-    requires = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" },
-    config = function()
-      require "startup".setup()
-    end
   }
 
   use {

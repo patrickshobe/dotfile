@@ -40,7 +40,3 @@ yabai -m config auto_balance                off
 # ====== List of rules =========================
 
 yabai -m rule --add app="^System Preferences$" manage=off
-
-
-killall limelight &> /dev/null
-limelight &> /dev/null &
