@@ -19,6 +19,7 @@ tags
 auto-save-list
 tramp
 .\#*
+Procfile.dev
 
 # Org-mode
 .org-id-locations
@@ -72,3 +73,6 @@ cscope.out
 cscope.in.out
 cscope.po.out
 .pre-commit-config.yaml
+
+# HC ONLY
+Procfile.dev

@@ -42,8 +42,6 @@ vim.o.updatetime = 250
 vim.wo.signcolumn = 'yes'
 
 -- disable netrw in favor of nvim-tree
-vim.g.loaded_netrw = 1
-vim.g.loaded_netrwPlugin = 1
 
 --Remap space as leader key
 vim.api.nvim_set_keymap('', '<Space>', '<Nop>', { noremap = true, silent = true })

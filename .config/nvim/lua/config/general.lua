@@ -10,4 +10,3 @@ local colorscheme = require('config.colorscheme')
 require('lualine').setup {
   options = { theme = colorscheme.custom_codedark, globalstatus = true }
 }
-require("startup").setup({ theme = "dashboard" })
