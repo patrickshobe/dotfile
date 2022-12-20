@@ -9,7 +9,8 @@ if ! zgen saved; then
   zgen oh-my-zsh plugins/fzf
   zgen oh-my-zsh plugins/git
   zgen oh-my-zsh plugins/themes
-  zgen oh-my-zsh plugins/fzf-tab
+  zgen oh-my-zsh custom/plugins/zsh-autosuggestions
+  zgen oh-my-zsh custom/plugins/fzf-tab
   zgen load zsh-users/zsh-syntax-highlighting
 
   # generate the init script from plugins above
@@ -35,8 +36,12 @@ alias pec='rspec --drb --format p'
 alias splork='RAILS_ENV=test bundle exec spork'
 alias cop='git status -s --porcelain | cut -c4- | xargs rubocop --force-exclusion'
 alias cop-branch='git diff --name-only master... | xargs rubocop --force-exclusion'
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#5c6370"
 
 
+export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+alias usenvm='[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' # This loads nvm
+ctags=/usr/local/bin/ctags
 
 export FZF_DEFAULT_COMMAND='fd --type f'
 
@@ -54,9 +59,14 @@ gch() {
 }
 release () { git checkout -b FE-release/$(date '+%Y-%m-%d'); }
 
+usenvm() {
+  export NVM_DIR="$HOME/.nvm"
+  [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
+  [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"
+}
+
 eval "$(starship init zsh)"
 
-source ~/fzf-tab/fzf-tab.plugin.zsh
 zstyle ':fzf-tab:*' fzf-command ftb-tmux-popup
 
 setopt EXTENDED_HISTORY
@@ -68,5 +78,4 @@ setopt HIST_FIND_NO_DUPS
 setopt HIST_SAVE_NO_DUPS
 setopt HIST_BEEP
 
-export TERM=xterm-256color-italic
 eval "$(rbenv init -)"
