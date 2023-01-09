@@ -12,6 +12,15 @@ local use = require('packer').use
 require('packer').startup(function()
   use 'wbthomason/packer.nvim' -- Package manager
   use 'mfussenegger/nvim-lint' -- Linting
+  use 'epwalsh/obsidian.nvim'
+  use {
+  "folke/trouble.nvim",
+  requires = "kyazdani42/nvim-web-devicons",
+  config = function()
+    require("trouble").setup { }
+  end
+}
+  use 'tpope/vim-dispatch'
 
   use 'kdheepak/lazygit.nvim' -- Git gui
   use 'tpope/vim-fugitive' -- Git commands in nvim
