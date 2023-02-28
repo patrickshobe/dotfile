@@ -5,6 +5,10 @@ autocmd!
 au TextYankPost * silent! lua vim.highlight.on_yank({timeout=400})
 augroup END
 ]]
+  vim.cmd([[
+ set spelllang=en_us
+ autocmd FileType markdown setlocal spell!
+  ]])
 
 vim.cmd([[
   set mouse=""
@@ -15,6 +19,8 @@ vim.cmd([[
   set clipboard=unnamed 
   set noshowmode
   set scrolloff=999
+  set listchars=tab:>-,trail:~,extends:>,precedes:<,space:· 
+  set list
 ]])
 vim.cmd([[
   filetype plugin indent on
@@ -35,7 +41,6 @@ vim.o.breakindent = true
 --Save undo history
 vim.opt.undofile = true
 --Case insensitive searching UNLESS /C or capital in search
-vim.o.ignorecase = true
 vim.o.smartcase = true
 --Decrease update time
 vim.o.updatetime = 250

@@ -13,14 +13,48 @@ require('packer').startup(function()
   use 'wbthomason/packer.nvim' -- Package manager
   use 'mfussenegger/nvim-lint' -- Linting
   use 'epwalsh/obsidian.nvim'
+  use { "shortcuts/no-neck-pain.nvim",
+    tag = "*",
+    config = function()
+      require("no-neck-pain").setup({
+    width = 200,
+})
+    end
+  }
   use {
-  "folke/trouble.nvim",
-  requires = "kyazdani42/nvim-web-devicons",
-  config = function()
-    require("trouble").setup { }
-  end
-}
-  use 'tpope/vim-dispatch'
+    "folke/trouble.nvim",
+    requires = "kyazdani42/nvim-web-devicons",
+    config = function()
+      require("trouble").setup {
+      }
+    end
+  }
+  use {
+    "j-hui/fidget.nvim",
+    config = function()
+      require("fidget").setup {
+        winddow = { blend = 0 }
+      }
+    end
+  }
+  use({
+    'ckolkey/ts-node-action',
+    requires = { 'nvim-treesitter' },
+    config = function() -- Optional
+      require("ts-node-action").setup({})
+    end
+  })
+use({
+    "glepnir/lspsaga.nvim",
+    branch = "main",
+    requires = { {"nvim-tree/nvim-web-devicons"} }
+})
+
+  use {
+    'stevearc/oil.nvim',
+    config = function() require('oil').setup() end
+  }
+  use 'mbbill/undotree'
 
   use 'kdheepak/lazygit.nvim' -- Git gui
   use 'tpope/vim-fugitive' -- Git commands in nvim
@@ -87,15 +121,6 @@ require('packer').startup(function()
   use 'L3MON4D3/LuaSnip' -- Snippets plugin
   use 'rafamadriz/friendly-snippets' -- default snippets
 
-  use {
-    "nvim-neotest/neotest", -- test runner
-    requires = {
-      "nvim-lua/plenary.nvim",
-      "nvim-treesitter/nvim-treesitter",
-      "antoinemadec/FixCursorHold.nvim",
-      'olimorris/neotest-rspec',
-    }
-  }
   use "vim-test/vim-test" -- legacy test runner
   use "preservim/vimux" -- run legacy tests in tmux
 
@@ -108,20 +133,6 @@ require('packer').startup(function()
     'romgrk/barbar.nvim',
     requires = { 'kyazdani42/nvim-web-devicons' }
   }
-
-  use {
-    "mickael-menu/zk-nvim",
-    requires = { "neovim/nvim-lspconfig" }
-  }
-  use {
-    'sudormrfbin/cheatsheet.nvim',
-
-    requires = {
-      { 'nvim-telescope/telescope.nvim' },
-      { 'nvim-lua/popup.nvim' },
-      { 'nvim-lua/plenary.nvim' },
-    }
-  }
- use 'ggandor/leap.nvim'
+  use 'ggandor/leap.nvim'
 end
 )

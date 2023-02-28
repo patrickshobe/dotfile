@@ -13,11 +13,11 @@ window:
     x: 20
     y: 20
   decorations: none
-  opacity: 0.96
+  opacity: 0.981
 
 cursor:
   style:
-    blinking: on
+    blinking: On
 
 key_bindings:
 - { key: Q, mods: Control, chars: "\x11" }
