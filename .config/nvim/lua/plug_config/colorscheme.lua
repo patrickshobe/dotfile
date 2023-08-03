@@ -9,7 +9,8 @@ require('onedark').load()
 -- transparent background for barbar
 vim.cmd([[
   hi! BufferTabpageFill ctermbg=red 
-  hi! CursorLine  guibg=Grey16
+  hi! CursorLine  guibg=Grey12
+  hi! Visual  guibg=Grey12 
 ]])
 
 

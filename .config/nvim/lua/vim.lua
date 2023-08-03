@@ -10,12 +10,12 @@ vim.cmd([[
   set mouse=""
   set undodir=~/.vim/undo-dir
   set undofile
-  set cursorline
   set number relativenumber 
   set clipboard=unnamed 
   set noshowmode
   set scrolloff=999
 ]])
+
 vim.cmd([[
   filetype plugin indent on
   " On pressing tab, insert 2 spaces
@@ -25,6 +25,7 @@ vim.cmd([[
   set softtabstop=2
   " when indenting with '>', use 2 spaces width
   set shiftwidth=2
+  let g:VM_leader                     = {'default':'-', 'visual':'\', 'buffer':'\\'}
 ]])
 
 vim.o.hlsearch = true
@@ -41,9 +42,12 @@ vim.o.smartcase = true
 vim.o.updatetime = 250
 vim.wo.signcolumn = 'yes'
 
--- disable netrw in favor of nvim-tree
-
 --Remap space as leader key
 vim.api.nvim_set_keymap('', '<Space>', '<Nop>', { noremap = true, silent = true })
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
+
+vim.g.gutentags_cache_dir = '~/.tags'
+
+vim.opt.cursorline = true
+vim.opt.cursorlineopt = 'screenline'

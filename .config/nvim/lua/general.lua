@@ -1,15 +1,14 @@
-require("nvim-tree").setup({ view = { side = 'right' } })
 require("mason").setup()
-vim.g.gutentags_cache_dir = '~/.tags'
-vim.opt.cursorline = true
-vim.opt.cursorlineopt = 'screenline'
 
-
-local colorscheme = require('config.colorscheme')
+local colorscheme = require('plug_config.colorscheme')
 
 require('lualine').setup {
-  options = { theme = colorscheme.custom_codedark, globalstatus = true }
+  options = {
+    theme = colorscheme.custom_codedark,
+    globalstatus = true,
+  }
 }
+require("oil").setup()
 
 require("obsidian").setup({
   dir = "~/vault/",
@@ -28,5 +27,8 @@ telescope.setup {
       i = { ["<c-t>"] = trouble.open_with_trouble },
       n = { ["<c-t>"] = trouble.open_with_trouble },
     },
+    file_ignore_patterns = {"%.rbi$"}
   },
 }
+
+require("telescope").load_extension('harpoon')
