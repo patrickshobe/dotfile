@@ -20,10 +20,11 @@ setopt HIST_FIND_NO_DUPS
 setopt HIST_IGNORE_ALL_DUPS
 
 export EDITOR=nvim
-export ZK_NOTEBOOK_DIR=~/zk
+export RESO_GEM_PATH=/Users/pat/code/rebny/reso-web-api/
 
 alias :q='exit'
 alias be='bundle exec'
+alias dc='docker-compose'
 alias !!!='exit'
 alias cc="clear && tmux clear-history"
 alias vi=nvim
@@ -37,6 +38,8 @@ alias bet='RAILS_ENV=test bundle exec'
 alias cop='git status -s --porcelain | cut -c4- | xargs rubocop --force-exclusion'
 alias cop-branch='git diff --name-only master... | xargs rubocop --force-exclusion'
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#5c6370"
+alias git-ignore="git update-index --assume-unchanged"
+alias git-unignore="git update-index --no-assume-unchanged"
 
 
 ctags=/usr/local/bin/ctags

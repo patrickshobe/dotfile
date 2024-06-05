@@ -5,6 +5,8 @@
 /__pycache__
 __pycache__/
 .swp
+.rubocop.yml
+
 .swb
 *.pyc
 dump.rdb

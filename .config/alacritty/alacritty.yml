@@ -12,7 +12,7 @@ window:
   padding:
     x: 20
     y: 20
-  decorations: none
+      #  decorations: none
   opacity: 0.96
 
 cursor:
