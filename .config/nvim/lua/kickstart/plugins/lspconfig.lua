@@ -140,23 +140,51 @@ return {
         -- But for many setups, the LSP (`tsserver`) will work just fine
         -- tsserver = {},
         --
-        ruby_ls = {
-          cmd = { "bundle", "exec", "ruby-lsp" },
-          root_dir = require("lspconfig.util").root_pattern("Gemfile", ".git"),
-          init_options = {
-            formatter = "auto",
-          },
-          settings = {},
-        },
+        -- ruby_lsp = {
+        --   cmd = { "bundle", "exec", "ruby-lsp" },
+        --   root_dir = require("lspconfig.util").root_pattern("Gemfile", ".git"),
+        --   init_options = {
+        --     formatter = "auto",
+        --   },
+        --   settings = {},
+        -- },
         html = {},
         tsserver = {},
         jsonls = {},
         yamlls = {},
-        sqlls = {},
         dockerls = {},
         docker_compose_language_service = {},
         sqlls = {},
+        solargraph = {
+          -- See: https://medium.com/@cristianvg/neovim-lsp-your-rbenv-gemset-and-solargraph-8896cb3df453
+          useBundler = true,
+          root_dir = require("lspconfig.util").root_pattern("Gemfile", ".git"),
 
+  -- cmd = { '/bin/sh', '-c', [[
+  --   export BUNDLE_GEMFILE=Gemfile.rubocop
+  --   eval "$(rbenv init -)"
+  --   exec bundle exec solargraph stdio
+  -- ]]},
+          mason = false,
+          settings = {
+            solargraph = {
+              autoformat = true,
+              completion = true,
+              diagnostics = true,
+              folding = true,
+              references = true,
+              rename = true,
+              symbols = true,
+            },
+          },
+        },
+        -- rubocop = {
+        --   -- See: https://docs.rubocop.org/rubocop/usage/lsp.html
+        --   cmd = { "bundle", "exec", "rubocop", "--lsp" },
+        --   mason = false,
+        --   root_dir = require("lspconfig.util").root_pattern("Gemfile", ".git"),
+        --   Gemfile = "Gemfile.rubocop",
+        -- },
         lua_ls = {
           -- cmd = {...},
           -- filetypes { ...},

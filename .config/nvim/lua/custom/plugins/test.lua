@@ -14,6 +14,7 @@ return {
     dependencies = {
       'nvim-lua/plenary.nvim',
       'olimorris/neotest-rspec',
+      'nvim-neotest/nvim-nio',
       'antoinemadec/FixCursorHold.nvim',
       'nvim-treesitter/nvim-treesitter',
     },

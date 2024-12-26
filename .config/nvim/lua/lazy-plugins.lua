@@ -44,8 +44,11 @@ require('lazy').setup {
   require 'kickstart/plugins/treesitter',
 
   require 'custom/plugins/barbar',
+  require 'custom/plugins/codecompanion',
   require 'custom/plugins/copilot',
   require 'custom/plugins/dashboard',
+  require 'custom/plugins/gp',
+  require 'custom/plugins/harpoon',
   require 'custom/plugins/indentline',
   require 'custom/plugins/lspsaga',
   require 'custom/plugins/noice',

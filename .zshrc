@@ -20,11 +20,11 @@ setopt HIST_FIND_NO_DUPS
 setopt HIST_IGNORE_ALL_DUPS
 
 export EDITOR=nvim
-export RESO_GEM_PATH=/Users/pat/code/rebny/reso-web-api/
+export RESO_GEM_PATH=/Users/pat/code/reso-web-api/
 
 alias :q='exit'
 alias be='bundle exec'
-alias dc='docker-compose'
+alias dc='docker compose'
 alias !!!='exit'
 alias cc="clear && tmux clear-history"
 alias vi=nvim
@@ -73,3 +73,14 @@ setopt HIST_SAVE_NO_DUPS
 setopt HIST_BEEP
 
 eval "$(rbenv init -)"
+source <(fzf --zsh)
+export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
+
+### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
+export PATH="/Users/pat/.rd/bin:$PATH"
+### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
+eval "$(fnm env --use-on-cd)"
+
+. "$HOME/.atuin/bin/env"
+
+eval "$(atuin init zsh)"
