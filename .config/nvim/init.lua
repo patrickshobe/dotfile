@@ -1,11 +1,2 @@
-require("config.cmp")
-require("config.colorscheme")
-require("config.general")
-require("config.gitsigns")
-require("config.lsp")
-require("config.neotest")
-require("config.plugins")
-require("config.treesitter")
-require("config.vim")
-require("config.whichkey")
-require("config.zk")
+-- bootstrap lazy.nvim, LazyVim and your plugins
+require("config.lazy")

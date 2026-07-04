@@ -74,5 +74,5 @@ cscope.in.out
 cscope.po.out
 .pre-commit-config.yaml
 
-# HC ONLY
-Procfile.dev
+docker-compose.override.yml
+/docker-compose.override.yml

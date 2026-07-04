@@ -79,3 +79,5 @@ setopt HIST_SAVE_NO_DUPS
 setopt HIST_BEEP
 
 eval "$(rbenv init -)"
+
+if command -v wt >/dev/null 2>&1; then eval "$(command wt config shell init zsh)"; fi
